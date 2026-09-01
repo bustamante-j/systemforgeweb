@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 104" role="img" aria-labelledby="title desc">
+  <title id="title">System Forge</title>
+  <desc id="desc">A blue and silver SF symbol followed by the words System Forge.</desc>
+  <defs>
+    <linearGradient id="navy" x1="18" y1="15" x2="92" y2="95" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0c70ff"/><stop offset=".55" stop-color="#08285b"/><stop offset="1" stop-color="#061833"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="54" y1="7" x2="102" y2="94" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d1d9e5"/><stop offset="1" stop-color="#697990"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#navy)" d="M13 28 48 6l15 9-34 22 35 20v29L46 98 11 78l15-10 22 12V65L13 45z"/>
+  <path fill="#0870ff" d="m53 29 16-12h52L108 37H72l-19 13z"/>
+  <path fill="url(#silver)" d="M66 52h43L96 71H83v17L66 99z"/>
+  <text x="139" y="68" fill="#071a33" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="44" font-weight="700" letter-spacing="-1.5">System</text>
+  <text x="302" y="68" fill="#0869f7" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="44" font-weight="750" letter-spacing="-1.8">Forge</text>
+</svg>
