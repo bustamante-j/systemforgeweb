@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { siteConfig } from '../data/site'
 import ComingSoonBadge from './ComingSoonBadge'
 import LivePreview from './LivePreview'
+import PriceTag from './PriceTag'
 import ThemeBadge from './ThemeBadge'
 
 export default function TemplateCard({ template }) {
@@ -50,7 +51,10 @@ export default function TemplateCard({ template }) {
         <h2>
           <Link to={`/templates/${template.id}`}>{template.name}</Link>
         </h2>
-        <ThemeBadge theme={template.theme} />
+        <div className="template-card-meta">
+          <PriceTag price={template.price} />
+          <ThemeBadge theme={template.theme} />
+        </div>
         <p className="template-audience">{template.audience}</p>
         <a
           className="demo-link"

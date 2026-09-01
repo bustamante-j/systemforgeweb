@@ -4,6 +4,7 @@ export const siteConfig = {
   tiktokUrl: 'https://www.tiktok.com/@systemforge1',
 }
 
+// `price` is in Philippine pesos; only 'available' templates have one.
 // `status` is 'available' (live preview + order) or 'coming-soon' (teaser card:
 // no demoUrl, no features — those templates are announced on TikTok first).
 export const templates = [
@@ -13,6 +14,7 @@ export const templates = [
     audience: 'Virtual assistants and service professionals',
     theme: 'light',
     status: 'available',
+    price: 100,
     description:
       'A warm, editorial portfolio built for professionals who want their services, process, and experience to feel organized and approachable.',
     demoUrl: 'https://systemforge1.github.io/neataesthetic/',
@@ -30,6 +32,7 @@ export const templates = [
     audience: 'Developers, IT students, and technical creatives',
     theme: 'dark',
     status: 'available',
+    price: 100,
     description:
       'A sharp, dark portfolio with high-contrast typography and a technical feel for people who want a confident digital presence.',
     demoUrl: 'https://systemforge1.github.io/darktechy/',
@@ -47,6 +50,7 @@ export const templates = [
     audience: 'Architects, designers, and visual professionals',
     theme: 'dark',
     status: 'available',
+    price: 100,
     description:
       'A navy-and-gold portfolio inspired by expedition journals and architectural drafting, suited to detailed visual work.',
     demoUrl: 'https://systemforge1.github.io/adventuredark/',

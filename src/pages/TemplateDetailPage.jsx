@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import ComingSoonBadge from '../components/ComingSoonBadge'
 import LivePreview from '../components/LivePreview'
+import PriceTag from '../components/PriceTag'
 import ThemeBadge from '../components/ThemeBadge'
 import { getTemplateById, siteConfig } from '../data/site'
 import NotFoundPage from './NotFoundPage'
@@ -32,7 +33,10 @@ export default function TemplateDetailPage() {
             <h1>{template.name}</h1>
             <p className="template-audience">{template.audience}</p>
           </div>
-          <ThemeBadge theme={template.theme} />
+          <div className="detail-headline-meta">
+            {isComingSoon ? null : <PriceTag price={template.price} />}
+            <ThemeBadge theme={template.theme} />
+          </div>
         </div>
 
         {isComingSoon ? (
