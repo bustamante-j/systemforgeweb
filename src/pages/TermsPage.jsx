@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 export default function TermsPage() {
   return (
     <>
-      <PageHeader title="Terms">
+      <PageHeader eyebrow="Legal" title="Terms">
         <p>These basic terms apply to the System Forge catalog website.</p>
       </PageHeader>
       <section className="section section-compact">

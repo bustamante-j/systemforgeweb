@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 export default function LicensePage() {
   return (
     <>
-      <PageHeader title="Template licensing">
+      <PageHeader eyebrow="Legal" title="Template licensing">
         <p>Licensing terms are confirmed with each customer before purchase.</p>
       </PageHeader>
       <section className="section section-compact">

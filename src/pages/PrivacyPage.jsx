@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 export default function PrivacyPage() {
   return (
     <>
-      <PageHeader title="Privacy">
+      <PageHeader eyebrow="Legal" title="Privacy">
         <p>System Forge does not collect customer information through this website.</p>
       </PageHeader>
       <section className="section section-compact">

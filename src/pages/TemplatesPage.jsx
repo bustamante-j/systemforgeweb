@@ -1,7 +1,15 @@
+import { Search } from 'lucide-react'
 import { useState } from 'react'
 import PageHeader from '../components/PageHeader'
+import Reveal from '../components/Reveal'
 import TemplateCard from '../components/TemplateCard'
 import { templates } from '../data/site'
+
+const themeFilters = [
+  { value: 'all', label: 'All' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+]
 
 export default function TemplatesPage() {
   const [query, setQuery] = useState('')
@@ -24,37 +32,46 @@ export default function TemplatesPage() {
 
   return (
     <>
-      <PageHeader title="Portfolio templates">
+      <PageHeader eyebrow="Catalog" title="Portfolio templates">
         <p>
-          Compare the available styles, inspect their live previews, and open any
+          Compare the available styles, scroll their live previews, and open any
           template for complete details.
         </p>
       </PageHeader>
 
       <section className="section section-compact">
         <div className="container">
-          <div className="catalog-controls" aria-label="Template filters">
-            <div className="field">
+          <div className="catalog-controls">
+            <div className="field search-field">
               <label htmlFor="template-search">Search templates</label>
-              <input
-                id="template-search"
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Try developer, editorial, or architecture"
-                type="search"
-                value={query}
-              />
+              <div className="search-input">
+                <Search aria-hidden="true" size={16} strokeWidth={1.75} />
+                <input
+                  id="template-search"
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Try developer, editorial, or architecture"
+                  type="search"
+                  value={query}
+                />
+              </div>
             </div>
+
             <div className="field">
-              <label htmlFor="theme-filter">Theme</label>
-              <select
-                id="theme-filter"
-                onChange={(event) => setTheme(event.target.value)}
-                value={theme}
-              >
-                <option value="all">All themes</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-              </select>
+              <span className="field-label" id="theme-filter-label">
+                Theme
+              </span>
+              <div className="segmented" role="group" aria-labelledby="theme-filter-label">
+                {themeFilters.map((filter) => (
+                  <button
+                    aria-pressed={theme === filter.value}
+                    key={filter.value}
+                    onClick={() => setTheme(filter.value)}
+                    type="button"
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -64,12 +81,12 @@ export default function TemplatesPage() {
 
           {visibleTemplates.length > 0 ? (
             <div className="template-grid">
-              {visibleTemplates.map((template) => (
-                <TemplateCard key={template.id} template={template} />
+              {visibleTemplates.map((template, index) => (
+                <TemplateCard index={index} key={template.id} template={template} />
               ))}
             </div>
           ) : (
-            <div className="empty-state">
+            <Reveal className="empty-state">
               <h2>No templates found</h2>
               <p>Try a different search term or theme.</p>
               <button
@@ -82,7 +99,7 @@ export default function TemplatesPage() {
               >
                 Clear filters
               </button>
-            </div>
+            </Reveal>
           )}
         </div>
       </section>
