@@ -1,26 +1,13 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import CatalogStatus from '../components/CatalogStatus'
 import LivePreview from '../components/LivePreview'
-import { siteConfig } from '../data/site'
-import { useTemplates } from '../hooks/useTemplates'
+import { getTemplateById, siteConfig } from '../data/site'
 import NotFoundPage from './NotFoundPage'
 
 export default function TemplateDetailPage() {
   const { templateId } = useParams()
-  const { error, retry, status, templates } = useTemplates()
-  const template = templates.find((item) => item.id === templateId)
+  const template = getTemplateById(templateId)
   const [copyState, setCopyState] = useState('Copy template name')
-
-  if (status === 'loading' || status === 'error') {
-    return (
-      <section className="section">
-        <div className="container">
-          <CatalogStatus error={error} retry={retry} status={status} />
-        </div>
-      </section>
-    )
-  }
 
   if (!template) {
     return <NotFoundPage />

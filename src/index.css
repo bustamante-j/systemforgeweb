@@ -406,24 +406,6 @@ li {
   background: var(--color-surface);
 }
 
-.status-panel {
-  padding: 2rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.status-panel h2 {
-  margin-bottom: 0.5rem;
-}
-
-.status-panel p:last-child {
-  margin-bottom: 0;
-}
-
-.status-panel-error {
-  border-left: 4px solid #b42318;
-}
-
 .detail-header {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(280px, 1.2fr);

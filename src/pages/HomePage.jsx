@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom'
-import CatalogStatus from '../components/CatalogStatus'
 import TemplateCard from '../components/TemplateCard'
-import { siteConfig } from '../data/site'
-import { useTemplates } from '../hooks/useTemplates'
+import { siteConfig, templates } from '../data/site'
 
 export default function HomePage() {
-  const { error, retry, status, templates } = useTemplates()
-
   return (
     <>
       <section className="section">
@@ -49,20 +45,11 @@ export default function HomePage() {
             <h2 id="available-title">Available templates</h2>
             <p>Open any template to inspect the full live website.</p>
           </div>
-          <CatalogStatus error={error} retry={retry} status={status} />
-          {status === 'success' && templates.length > 0 ? (
-            <div className="template-grid">
-              {templates.map((template) => (
-                <TemplateCard headingLevel={3} key={template.id} template={template} />
-              ))}
-            </div>
-          ) : null}
-          {status === 'success' && templates.length === 0 ? (
-            <div className="empty-state">
-              <h3>More templates are on the way</h3>
-              <p>There are no published templates in the catalog yet.</p>
-            </div>
-          ) : null}
+          <div className="template-grid">
+            {templates.map((template) => (
+              <TemplateCard headingLevel={3} key={template.id} template={template} />
+            ))}
+          </div>
         </div>
       </section>
 

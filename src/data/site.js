@@ -4,3 +4,58 @@ export const siteConfig = {
   tiktokHandle: '@systemforge1',
   tiktokUrl: 'https://www.tiktok.com/@systemforge1',
 }
+
+export const templates = [
+  {
+    id: 'neat-aesthetic',
+    name: 'Neat Aesthetic',
+    audience: 'Virtual assistants and service professionals',
+    theme: 'light',
+    description:
+      'A warm, editorial portfolio built for professionals who want their services, process, and experience to feel organized and approachable.',
+    demoUrl: 'https://systemforge1.github.io/neataesthetic/',
+    tags: ['Light', 'Editorial', 'Service portfolio'],
+    features: [
+      'Strong introduction and service overview',
+      'About, process, testimonials, skills, and contact sections',
+      'Responsive single-page layout',
+      'Clear calls to action for inquiries',
+    ],
+  },
+  {
+    id: 'dark-techy',
+    name: 'Dark Techy',
+    audience: 'Developers, IT students, and technical creatives',
+    theme: 'dark',
+    description:
+      'A sharp, dark portfolio with high-contrast typography and a technical feel for people who want a confident digital presence.',
+    demoUrl: 'https://systemforge1.github.io/darktechy/',
+    tags: ['Dark', 'Technical', 'Developer portfolio'],
+    features: [
+      'High-contrast dark presentation',
+      'Project, skill, profile, and contact content',
+      'Responsive single-page layout',
+      'Interactive details and motion in the live demo',
+    ],
+  },
+  {
+    id: 'adventure-dark',
+    name: 'Adventure Dark',
+    audience: 'Architects, designers, and visual professionals',
+    theme: 'dark',
+    description:
+      'A navy-and-gold portfolio inspired by expedition journals and architectural drafting, suited to detailed visual work.',
+    demoUrl: 'https://systemforge1.github.io/adventuredark/',
+    tags: ['Dark', 'Editorial', 'Architecture portfolio'],
+    features: [
+      'Project-led portfolio structure',
+      'About, services, process, praise, skills, and contact sections',
+      'Responsive single-page layout',
+      'Distinct architectural and field-journal presentation',
+    ],
+  },
+]
+
+export function getTemplateById(templateId) {
+  return templates.find((template) => template.id === templateId)
+}

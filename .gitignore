@@ -28,4 +28,3 @@ src/assets/hero.png
 
 .vercel
 .env*
-!.env.example
