@@ -1,9 +1,41 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { siteConfig } from '../data/site'
+import ComingSoonBadge from './ComingSoonBadge'
 import LivePreview from './LivePreview'
 import ThemeBadge from './ThemeBadge'
 
 export default function TemplateCard({ template }) {
+  // Upcoming templates have no demo to preview and nothing to order yet, so the
+  // card is a teaser: badge, description, theme, and a follow link.
+  if (template.status === 'coming-soon') {
+    return (
+      <article className="template-card template-card-upcoming">
+        <div className="upcoming-panel">
+          <ComingSoonBadge />
+          <p>{template.description}</p>
+        </div>
+
+        <div className="template-card-body">
+          <h2>{template.name}</h2>
+          <ThemeBadge theme={template.theme} />
+          <p className="template-audience">{template.audience}</p>
+        </div>
+
+        <a
+          aria-label={`Follow ${siteConfig.tiktokHandle} on TikTok for ${template.name} updates`}
+          className="button button-secondary"
+          href={siteConfig.tiktokUrl}
+          rel="noreferrer"
+          target="_blank"
+        >
+          Follow on TikTok
+          <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
+        </a>
+      </article>
+    )
+  }
+
   return (
     <article className="template-card">
       <Link

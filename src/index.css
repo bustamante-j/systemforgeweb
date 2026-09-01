@@ -715,6 +715,55 @@ strong {
   color: #fff;
 }
 
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid var(--color-blue);
+  background: var(--wash);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-blue-dark);
+  flex: none;
+}
+
+/* ---------- Coming soon ---------- */
+
+.template-card-upcoming .button {
+  align-self: start;
+}
+
+.detail-headline .status-badge {
+  margin-bottom: var(--s-3);
+}
+
+/* Stands in for the preview frame, so upcoming cards keep the grid rhythm. */
+.upcoming-panel {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--s-4);
+  /* Same 16/10 as .preview-viewport, so the two card types stay in step. */
+  aspect-ratio: 16 / 10;
+  padding: var(--s-6);
+  border: 1px dashed var(--line-strong);
+  background: var(--color-surface);
+}
+
+.upcoming-panel p {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--color-muted);
+}
+
+.upcoming-panel-detail {
+  aspect-ratio: auto;
+  margin-bottom: var(--s-6);
+}
+
 .empty-state {
   display: grid;
   justify-items: center;
@@ -970,6 +1019,15 @@ strong {
 
   .detail-actions .button {
     flex: 1 1 100%;
+  }
+
+  .template-card-upcoming .button {
+    width: 100%;
+  }
+
+  .upcoming-panel {
+    aspect-ratio: auto;
+    padding: var(--s-5);
   }
 }
 

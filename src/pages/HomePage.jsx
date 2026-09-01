@@ -14,19 +14,27 @@ export default function HomePage() {
   const [theme, setTheme] = useState('all')
 
   const normalizedQuery = query.trim().toLowerCase()
-  const visibleTemplates = templates.filter((template) => {
-    const matchesTheme = theme === 'all' || template.theme === theme
-    const searchableText = [
-      template.name,
-      template.audience,
-      template.description,
-      ...template.tags,
-    ]
-      .join(' ')
-      .toLowerCase()
+  const visibleTemplates = templates
+    .filter((template) => {
+      const matchesTheme = theme === 'all' || template.theme === theme
+      const searchableText = [
+        template.name,
+        template.audience,
+        template.description,
+        template.status === 'coming-soon' ? 'coming soon upcoming' : 'available',
+        ...template.tags,
+      ]
+        .join(' ')
+        .toLowerCase()
 
-    return matchesTheme && searchableText.includes(normalizedQuery)
-  })
+      return matchesTheme && searchableText.includes(normalizedQuery)
+    })
+    // Available templates lead the grid; upcoming ones trail it. Sort is stable,
+    // so the order inside each group stays the data order.
+    .sort(
+      (first, second) =>
+        Number(first.status === 'coming-soon') - Number(second.status === 'coming-soon'),
+    )
 
   return (
     <section className="section section-compact">
