@@ -1,10 +1,10 @@
-import { Menu, X } from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { siteConfig } from '../data/site'
 
 const navItems = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/templates', label: 'Templates' },
+  { to: '/', label: 'Templates', end: true },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -31,9 +31,15 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
-          <NavLink className="nav-link nav-cta" to="/templates">
-            Browse templates
-          </NavLink>
+          <a
+            className="nav-link nav-cta"
+            href={siteConfig.tiktokUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            TikTok
+            <ArrowUpRight aria-hidden="true" size={13} strokeWidth={2} />
+          </a>
         </nav>
 
         <button

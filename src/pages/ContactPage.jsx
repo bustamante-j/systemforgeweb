@@ -5,41 +5,25 @@ import { siteConfig } from '../data/site'
 export default function ContactPage() {
   return (
     <>
-      <PageHeader eyebrow="Contact" title="Send the template you want.">
+      <PageHeader eyebrow="Contact" title="Order a template">
         <p>
-          Found a style you like? Send its name or a screenshot to System Forge on
-          TikTok.
+          Message <strong>{siteConfig.tiktokHandle}</strong> with the template name
+          or a screenshot.
         </p>
       </PageHeader>
 
       <section className="section section-compact">
-        <div className="container two-column">
-          <div className="content-block">
-            <h2>Message on TikTok</h2>
-            <p>
-              Contact <strong>{siteConfig.tiktokHandle}</strong> to ask about a
-              template, pricing, customization, or delivery.
-            </p>
-            <a
-              className="button"
-              href={siteConfig.tiktokUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              Open System Forge on TikTok
-              <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
-            </a>
-          </div>
-
-          <div className="content-block">
-            <h2>Include in your message</h2>
-            <ul className="plain-list">
-              <li>The template name or a screenshot</li>
-              <li>What kind of portfolio you need</li>
-              <li>Your preferred deadline</li>
-              <li>Any changes or extra pages you want</li>
-            </ul>
-          </div>
+        <div className="container content-block">
+          <ul className="plain-list">
+            <li>The template you want</li>
+            <li>What the portfolio is for</li>
+            <li>Your deadline</li>
+            <li>Any changes or extra pages</li>
+          </ul>
+          <a className="button" href={siteConfig.tiktokUrl} rel="noreferrer" target="_blank">
+            Message on TikTok
+            <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
+          </a>
         </div>
       </section>
     </>

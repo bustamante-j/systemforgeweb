@@ -8,7 +8,6 @@ import LicensePage from './pages/LicensePage'
 import NotFoundPage from './pages/NotFoundPage'
 import PrivacyPage from './pages/PrivacyPage'
 import TemplateDetailPage from './pages/TemplateDetailPage'
-import TemplatesPage from './pages/TemplatesPage'
 import TermsPage from './pages/TermsPage'
 
 function ScrollToTop() {
@@ -28,7 +27,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="templates" element={<TemplatesPage />} />
+          <Route path="templates" element={<HomePage />} />
           <Route path="templates/:templateId" element={<TemplateDetailPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />

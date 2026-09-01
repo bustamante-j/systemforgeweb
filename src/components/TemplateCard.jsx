@@ -3,41 +3,32 @@ import { Link } from 'react-router-dom'
 import LivePreview from './LivePreview'
 import ThemeBadge from './ThemeBadge'
 
-export default function TemplateCard({ template, headingLevel = 2, index = 0 }) {
-  const Heading = `h${headingLevel}`
-
+export default function TemplateCard({ template }) {
   return (
     <article className="template-card">
-      <div className="template-card-head">
-        <span className="template-index">{String(index + 1).padStart(2, '0')}</span>
-        <ThemeBadge theme={template.theme} />
-      </div>
-
-      <LivePreview template={template} />
+      <Link
+        aria-label={`View ${template.name}`}
+        className="preview-link"
+        to={`/templates/${template.id}`}
+      >
+        <LivePreview template={template} />
+      </Link>
 
       <div className="template-card-body">
-        <Heading>{template.name}</Heading>
+        <h2>
+          <Link to={`/templates/${template.id}`}>{template.name}</Link>
+        </h2>
+        <ThemeBadge theme={template.theme} />
         <p className="template-audience">{template.audience}</p>
-        <p>{template.description}</p>
-        <ul className="tag-list" aria-label={`${template.name} categories`}>
-          {template.tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
-        <div className="button-row">
-          <Link className="button" to={`/templates/${template.id}`}>
-            View template
-          </Link>
-          <a
-            className="button button-secondary"
-            href={template.demoUrl}
-            rel="noreferrer"
-            target="_blank"
-          >
-            Open demo
-            <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
-          </a>
-        </div>
+        <a
+          className="demo-link"
+          href={template.demoUrl}
+          rel="noreferrer"
+          target="_blank"
+        >
+          Demo
+          <ArrowUpRight aria-hidden="true" size={13} strokeWidth={2} />
+        </a>
       </div>
     </article>
   )
