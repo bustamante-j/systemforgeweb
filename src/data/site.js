@@ -47,19 +47,37 @@ export const templates = [
   {
     id: 'adventure-dark',
     name: 'Adventure Dark',
-    audience: 'Architects, designers, and visual professionals',
+    audience: 'Architects, designers, and architecture students',
     theme: 'dark',
     status: 'available',
     price: 100,
     description:
-      'A navy-and-gold portfolio inspired by expedition journals and architectural drafting, suited to detailed visual work.',
+      'A navy-and-gold portfolio laid out like an architectural drawing set, with numbered sheets, site sections, and survey coordinates framing detailed visual work.',
     demoUrl: 'https://systemforge1.github.io/adventuredark/',
     tags: ['Dark', 'Editorial', 'Architecture portfolio'],
     features: [
-      'Project-led portfolio structure',
-      'About, services, process, praise, skills, and contact sections',
+      'Laid out as a numbered drawing set, sheet A-00 through A-06',
+      'About, work, process, field notes, skills, and contact sections',
+      'Phased project timeline, skill meters, and site-section diagrams',
       'Responsive single-page layout',
-      'Distinct architectural and field-journal presentation',
+    ],
+  },
+  {
+    id: 'bnw-aesthetic',
+    name: 'BnW Aesthetic',
+    audience: 'Photographers and visual storytellers',
+    theme: 'light',
+    status: 'available',
+    price: 100,
+    description:
+      'A Swiss-minimal photography portfolio on warm paper tones, with an archive-style project grid and editorial display type that keeps the images in front.',
+    demoUrl: 'https://systemforge1.github.io/bnwaesthetic/',
+    tags: ['Light', 'Minimal', 'Photography portfolio'],
+    features: [
+      'Numbered editorial sections, 01 Archive through 10 Contact',
+      'Selected work archive, services, process, and FAQ sections',
+      'Client quotes, press mentions, journal, and recent feed blocks',
+      'Responsive single-page layout',
     ],
   },
   {
