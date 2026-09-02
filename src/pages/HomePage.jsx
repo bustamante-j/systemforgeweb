@@ -9,6 +9,12 @@ const themeFilters = [
   { value: 'dark', label: 'Dark' },
 ]
 
+// Section order is the catalog order: standard first, premium below it.
+const tierSections = [
+  { value: 'standard', title: 'Standard templates' },
+  { value: 'premium', title: 'Premium templates' },
+]
+
 export default function HomePage() {
   const [query, setQuery] = useState('')
   const [theme, setTheme] = useState('all')
@@ -21,6 +27,7 @@ export default function HomePage() {
         template.name,
         template.audience,
         template.description,
+        template.tier === 'premium' ? 'premium' : 'standard',
         template.status === 'coming-soon' ? 'coming soon upcoming' : 'available',
         ...template.tags,
       ]
@@ -35,6 +42,15 @@ export default function HomePage() {
       (first, second) =>
         Number(first.status === 'coming-soon') - Number(second.status === 'coming-soon'),
     )
+
+  // A tier only gets a section when the current search and filter leave
+  // something in it.
+  const visibleSections = tierSections
+    .map((section) => ({
+      ...section,
+      matches: visibleTemplates.filter((template) => template.tier === section.value),
+    }))
+    .filter((section) => section.matches.length > 0)
 
   return (
     <section className="section section-compact">
@@ -74,12 +90,25 @@ export default function HomePage() {
           </p>
         </div>
 
-        {visibleTemplates.length > 0 ? (
-          <div className="template-grid">
-            {visibleTemplates.map((template) => (
-              <TemplateCard key={template.id} template={template} />
-            ))}
-          </div>
+        {visibleSections.length > 0 ? (
+          visibleSections.map((section) => (
+            <section
+              aria-label={section.title}
+              className="catalog-section"
+              key={section.value}
+            >
+              <div className="catalog-section-head">
+                <h2>{section.title}</h2>
+                <p className="results-note">{section.matches.length}</p>
+              </div>
+
+              <div className="template-grid">
+                {section.matches.map((template) => (
+                  <TemplateCard key={template.id} template={template} />
+                ))}
+              </div>
+            </section>
+          ))
         ) : (
           <div className="empty-state">
             <p>No templates match that search.</p>

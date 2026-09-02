@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import ComingSoonBadge from '../components/ComingSoonBadge'
 import LivePreview from '../components/LivePreview'
+import PremiumBadge from '../components/PremiumBadge'
 import PriceTag from '../components/PriceTag'
 import ThemeBadge from '../components/ThemeBadge'
 import { getTemplateById, siteConfig } from '../data/site'
@@ -18,6 +19,7 @@ export default function TemplateDetailPage() {
   // The catalog does not link upcoming templates, but their route still
   // resolves — there is no demo or feature list to show for them yet.
   const isComingSoon = template.status === 'coming-soon'
+  const isPremium = template.tier === 'premium'
 
   return (
     <section className="section section-compact">
@@ -29,7 +31,12 @@ export default function TemplateDetailPage() {
 
         <div className="detail-headline">
           <div>
-            {isComingSoon ? <ComingSoonBadge /> : null}
+            {isComingSoon || isPremium ? (
+              <div className="badge-row detail-headline-badges">
+                {isComingSoon ? <ComingSoonBadge /> : null}
+                {isPremium ? <PremiumBadge /> : null}
+              </div>
+            ) : null}
             <h1>{template.name}</h1>
             <p className="template-audience">{template.audience}</p>
           </div>

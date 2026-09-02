@@ -18,7 +18,7 @@ There is no test runner in this project. `npm run lint` and `npm run build` are 
 
 Static marketing/catalog SPA: Vite + React 19 + react-router-dom v7, plain JSX (no TypeScript), deployed on Vercel.
 
-**Content is data, not markup.** `src/data/site.js` is the single source of truth: `siteConfig` (brand name, TikTok handle/URL used across Header, Footer, HomePage, TemplateDetailPage) and the `templates` array consumed by HomePage and `getTemplateById`. Adding or editing a template means editing that array only — no new routes or components. Each template's `id` is the `/templates/:templateId` URL segment, `theme` (`light` | `dark`) drives the theme filter, and `name`/`audience`/`description`/`tags` are the fields the search box matches against.
+**Content is data, not markup.** `src/data/site.js` is the single source of truth: `siteConfig` (brand name, TikTok handle/URL used across Header, Footer, HomePage, TemplateDetailPage) and the `templates` array consumed by HomePage and `getTemplateById`. Adding or editing a template means editing that array only — no new routes or components. Each template's `id` is the `/templates/:templateId` URL segment, `theme` (`light` | `dark`) drives the theme filter, `tier` (`standard` | `premium`) picks which catalog section the card lands in, and `name`/`audience`/`description`/`tags` are the fields the search box matches against.
 
 A previous commit moved this catalog to Supabase and was reverted (`79ace8c`); the static data module is the intended design. Don't reintroduce a backend unless asked.
 

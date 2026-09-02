@@ -7,12 +7,15 @@ export const siteConfig = {
 // `price` is in Philippine pesos; only 'available' templates have one.
 // `status` is 'available' (live preview + order) or 'coming-soon' (teaser card:
 // no demoUrl, no features — those templates are announced on TikTok first).
+// `tier` is 'standard' or 'premium' — it picks the catalog section the template
+// lands in; premium cards also carry a badge on the card and detail page.
 export const templates = [
   {
     id: 'neat-aesthetic',
     name: 'Neat Aesthetic',
     audience: 'Virtual assistants and service professionals',
     theme: 'light',
+    tier: 'standard',
     status: 'available',
     price: 100,
     description:
@@ -31,6 +34,7 @@ export const templates = [
     name: 'Dark Techy',
     audience: 'Developers, IT students, and technical creatives',
     theme: 'dark',
+    tier: 'standard',
     status: 'available',
     price: 100,
     description:
@@ -49,6 +53,7 @@ export const templates = [
     name: 'Adventure Dark',
     audience: 'Architects, designers, and architecture students',
     theme: 'dark',
+    tier: 'standard',
     status: 'available',
     price: 100,
     description:
@@ -67,8 +72,9 @@ export const templates = [
     name: 'BnW Aesthetic',
     audience: 'Photographers and visual storytellers',
     theme: 'light',
+    tier: 'premium',
     status: 'available',
-    price: 100,
+    price: 200,
     description:
       'A Swiss-minimal photography portfolio on warm paper tones, with an archive-style project grid and editorial display type that keeps the images in front.',
     demoUrl: 'https://systemforge1.github.io/bnwaesthetic/',
@@ -85,6 +91,7 @@ export const templates = [
     name: 'Soft Studio',
     audience: 'Photographers and creative studios',
     theme: 'light',
+    tier: 'standard',
     status: 'coming-soon',
     description:
       'A gallery-first portfolio with generous whitespace, built to let large images carry the page.',
@@ -95,6 +102,7 @@ export const templates = [
     name: 'Neon Grid',
     audience: 'Game developers and motion designers',
     theme: 'dark',
+    tier: 'standard',
     status: 'coming-soon',
     description:
       'A neon-lit dark layout with a grid-driven project wall for work that needs a bit more energy.',
