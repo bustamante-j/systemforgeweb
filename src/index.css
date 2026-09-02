@@ -981,6 +981,47 @@ strong {
   background: var(--color-blue);
 }
 
+/* Numbered ordering walkthrough on the contact page. The <ol> carries the
+   real numbering; the mono label beside each step is decoration. */
+.order-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+.order-step {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.order-step-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-blue);
+  padding-top: 0.3rem;
+}
+
+.order-step-body p {
+  margin-bottom: 0;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.order-step-items {
+  margin: var(--s-4) 0 0;
+  font-size: 0.9375rem;
+}
+
+.order-step-items li:last-child {
+  padding-bottom: 0;
+}
+
 .notice {
   padding: var(--s-5);
   margin-bottom: var(--s-6);
@@ -1127,6 +1168,11 @@ strong {
 
   .template-card-upcoming .button {
     width: 100%;
+  }
+
+  .order-step {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-2);
   }
 
   .upcoming-panel {

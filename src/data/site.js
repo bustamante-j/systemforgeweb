@@ -4,6 +4,51 @@ export const siteConfig = {
   tiktokUrl: 'https://www.tiktok.com/@system_forgeee',
 }
 
+// The ordering walkthrough on the contact page, in order. `detail` is the one
+// line under a step; `items` is the checklist a step asks the buyer to send.
+export const orderSteps = [
+  {
+    title: 'Screenshot the template you want',
+    detail:
+      'Open its live preview here and take a screenshot, or just send the template name.',
+  },
+  {
+    title: 'Send the screenshot with your details',
+    detail: 'Message us on TikTok with everything that should end up on the site.',
+    items: [
+      'Your full name and the title you go by',
+      'Photos — a profile shot, plus any work or project images',
+      'Contact details: email, phone, and the social links you want listed',
+      'Skills, tools, and the services you offer',
+      'Work experience, education, and certifications',
+      'A short about-me paragraph, and testimonials if you have them',
+      'Projects or samples you want featured',
+      'Your deadline, plus any changes or extra pages you want',
+      'Anything else: preferred colors, a resume or CV, a domain name',
+    ],
+  },
+  {
+    title: 'Send a 50% downpayment',
+    detail: 'This is what starts the build.',
+  },
+  {
+    title: 'Wait for the build',
+    detail: 'We set the template up with your content and keep you updated.',
+  },
+  {
+    title: 'Review the preview',
+    detail: 'We send a preview of the finished site so you can check it over.',
+  },
+  {
+    title: 'Send the remaining 50%',
+    detail: 'Skip this one if you already paid in full.',
+  },
+  {
+    title: 'Get your ready-to-use link',
+    detail: 'Once payment clears, we hand over the live link to your portfolio website.',
+  },
+]
+
 // `price` is in Philippine pesos; only 'available' templates have one.
 // `status` is 'available' (live preview + order) or 'coming-soon' (teaser card:
 // no demoUrl, no features — those templates are announced on TikTok first).
