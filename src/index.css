@@ -1,6 +1,81 @@
 /* System Forge — catalog-first. The template grid is the page; everything
    around it stays quiet. */
 
+/* ---------- Fonts ---------- */
+
+/* Self-hosted rather than fetched from Google, which keeps two extra origins
+   and a stylesheet round trip off the critical path. Only the weights the
+   stylesheet actually asks for are here: Archivo 700 (headings), Space Grotesk
+   400/600 (body, strong), JetBrains Mono 400/500 (every mono label). The two
+   text families ship as variable files, so both of their weights come out of a
+   single download. latin-ext is split out behind its unicode-range: it exists
+   for the ₱ in the price tags and is skipped by anyone who never renders one. */
+
+@font-face {
+  font-family: Archivo;
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Archivo;
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   /* Brand palette (unchanged) */
   --color-navy: #071a33;
@@ -54,12 +129,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* iOS Safari otherwise inflates body copy when the phone is turned. */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  min-height: 100dvh;
   background: var(--color-background);
   overflow-x: hidden;
 }
@@ -78,6 +154,8 @@ input {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+  /* Drops the legacy double-tap-zoom wait on every touch target here. */
+  touch-action: manipulation;
 }
 
 a {
@@ -167,7 +245,10 @@ strong {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  /* viewport-fit=cover lets landscape on a notched phone push content under
+     the sensor housing, so the gutter has to clear it. */
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
 }
 
 .skip-link {
@@ -323,6 +404,23 @@ strong {
   background: var(--color-surface);
   color: var(--ink);
   cursor: pointer;
+}
+
+/* Covers the catalog while the mobile menu is open. A tap closes it, and
+   touch-action keeps a drag that starts here from scrolling the page behind
+   the panel — which is cheaper and far less glitchy on iOS than locking the
+   body scroll position. It is a sibling of the header, not a child, so that it
+   dims the page without dimming the header it belongs to. */
+.nav-scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  padding: 0;
+  border: 0;
+  background: rgba(7, 26, 51, 0.32);
+  touch-action: none;
+  cursor: default;
 }
 
 /* ---------- Sections ---------- */
@@ -497,6 +595,38 @@ strong {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--color-background);
+  /* What sits inside is a whole third-party page rendered at 1280x800 and
+     scaled down, so it is the most expensive box on the catalog. Containment
+     keeps its layout and paint off the rest of the page, and
+     content-visibility lets the browser drop the raster for demos that have
+     been scrolled past. The aspect-ratio fixes the height either way, so
+     nothing shifts as they come in and out of view. */
+  contain: layout paint;
+  content-visibility: auto;
+}
+
+/* A quiet sweep while a demo is actually fetching, so a slow connection reads
+   as "working" rather than "broken". Transform-only, so it stays on the
+   compositor, and it is gone the moment the frame is up. */
+.preview-frame[data-status="loading"] .preview-viewport::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, var(--wash), transparent);
+  animation: preview-sweep 1700ms var(--ease) infinite;
+}
+
+@keyframes preview-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(282%);
+  }
 }
 
 /* Sits behind the demo: the label while it loads, the fallback if it never does. */
@@ -520,13 +650,17 @@ strong {
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--preview-width, 1280px);
+  /* The desktop viewport the demo is rendered at, kept in step with
+     FRAME_WIDTH in LivePreview. */
+  width: 1280px;
   /* Overrides the global max-width reset: the demo renders at desktop width
      and is only then scaled down. */
   max-width: none;
-  height: var(--preview-height, 800px);
+  height: 800px;
   border: 0;
-  transform: scale(var(--preview-scale, 1));
+  /* LivePreview writes --preview-scale on the viewport as it is measured.
+     Until then the frame is folded away rather than overflowing at 1:1. */
+  transform: scale(var(--preview-scale, 0));
   transform-origin: 0 0;
   opacity: 0;
   /* The demo is a picture here; clicks belong to the card. */
@@ -534,13 +668,14 @@ strong {
   transition: opacity 420ms var(--ease);
 }
 
-.preview-frame[data-loaded="true"] iframe {
+.preview-frame[data-status="ready"] iframe {
   opacity: 1;
 }
 
-.preview-frame[data-loaded="true"] .preview-fallback {
+.preview-frame[data-status="ready"] .preview-fallback {
   opacity: 0;
 }
+
 
 .preview-link {
   display: block;
@@ -604,7 +739,9 @@ strong {
   min-height: 46px;
   border: 0;
   background: transparent;
-  font-size: 0.9375rem;
+  /* Must stay at 16px: iOS Safari zooms the whole page in on focus for
+     anything smaller, and the visitor is then stranded at 1.2x. */
+  font-size: 1rem;
   outline: none;
 }
 
@@ -1036,6 +1173,8 @@ strong {
   background: var(--color-navy);
   color: rgba(255, 255, 255, 0.66);
   padding-block: var(--s-5);
+  /* Clears the home indicator on gesture-nav phones. */
+  padding-bottom: max(var(--s-5), env(safe-area-inset-bottom));
 }
 
 .footer-inner {
@@ -1094,27 +1233,64 @@ strong {
     --s-7: 2.25rem;
   }
 
+  /* Re-blurring the backdrop on every scrolled frame is among the more
+     expensive things a phone GPU can be handed, and at 0.88 alpha the blur is
+     barely legible anyway. Opaque instead, so the sticky header costs nothing
+     to scroll past. */
+  .site-header {
+    background: var(--color-background);
+    backdrop-filter: none;
+  }
+
   .nav-toggle {
     display: inline-flex;
   }
 
+  .nav-scrim[data-open="true"] {
+    display: block;
+  }
+
   .site-nav {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
-    left: calc(-1 * var(--gutter));
-    right: calc(-1 * var(--gutter));
+    /* .header-inner is the containing block and is already full-width at every
+       size that shows this panel, so 0/0 is the full bleed the border-bottom
+       wants — while the padding below keeps the links in line with the logo. */
+    left: 0;
+    right: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: var(--s-3) var(--gutter) var(--s-5);
+    padding-top: var(--s-3);
+    padding-left: max(var(--gutter), env(safe-area-inset-left));
+    padding-right: max(var(--gutter), env(safe-area-inset-right));
+    padding-bottom: max(var(--s-5), env(safe-area-inset-bottom));
     background: var(--color-surface);
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow-lift);
+    /* The panel can outgrow a short landscape viewport, and a scroll that runs
+       out inside it should not carry on into the catalog behind. */
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transition: opacity 180ms var(--ease), transform 180ms var(--ease),
+      display 180ms allow-discrete;
   }
 
-  .site-nav[data-open="true"] {
-    display: flex;
+  /* `allow-discrete` lets the panel finish fading before it leaves the box
+     tree; browsers without it just snap open and shut, exactly as before. */
+  .site-nav:not([data-open="true"]) {
+    display: none;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  @starting-style {
+    .site-nav[data-open="true"] {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
   }
 
   .nav-link {
@@ -1141,6 +1317,24 @@ strong {
 @media (max-width: 600px) {
   .template-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Side by side, a premium card's three badges leave the title an 86px sliver
+     and wrap the audience line six times over. Stack the header instead:
+     title, badges, audience, demo — each across the full width. */
+  .template-card-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-3);
+  }
+
+  .template-card-body .theme-badge,
+  .template-card-body .demo-link,
+  .template-card-meta {
+    justify-self: start;
+  }
+
+  .template-card-meta {
+    justify-content: flex-start;
   }
 
   .catalog-controls {
@@ -1178,6 +1372,21 @@ strong {
   .upcoming-panel {
     aspect-ratio: auto;
     padding: var(--s-5);
+  }
+}
+
+/* Several of the mono links are 11px type — a fine size to read and a poor one
+   to hit. Give them a real target on touch without moving the text. */
+@media (pointer: coarse) {
+  .demo-link,
+  .back-link,
+  .footer-links a {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .footer-links {
+    gap: 0 var(--s-5);
   }
 }
 

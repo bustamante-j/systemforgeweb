@@ -52,7 +52,7 @@ export default function TemplateDetailPage() {
             <p>{template.description}</p>
           </div>
         ) : (
-          <LivePreview template={template} />
+          <LivePreview priority template={template} />
         )}
 
         <div className="detail-actions">

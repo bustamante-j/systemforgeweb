@@ -3,18 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="Browse ready-to-use portfolio website templates from System Forge."
     />
     <meta name="theme-color" content="#071a33" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Fonts are self-hosted, so the two Google origins are off the critical
+         path entirely. These two carry the headings and body copy, so they are
+         preloaded; the mono labels are small enough to come via the stylesheet. -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/space-grotesk-latin.woff2"
+      crossorigin
     />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-latin.woff2" crossorigin />
+
+    <!-- Every card preview is an iframe on this origin: warm the connection now
+         rather than when the first one scrolls into view. -->
+    <link rel="preconnect" href="https://systemforge1.github.io" />
+    <link rel="dns-prefetch" href="https://systemforge1.github.io" />
+
     <title>System Forge</title>
   </head>
   <body>

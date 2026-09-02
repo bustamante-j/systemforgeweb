@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import TemplateCard from '../components/TemplateCard'
 import { templates } from '../data/site'
 
@@ -15,42 +15,59 @@ const tierSections = [
   { value: 'premium', title: 'Premium templates' },
 ]
 
+// The text each template is matched against, built once at module load instead
+// of re-joined for every template on every keystroke.
+const searchIndex = new Map(
+  templates.map((template) => [
+    template.id,
+    [
+      template.name,
+      template.audience,
+      template.description,
+      template.tier === 'premium' ? 'premium' : 'standard',
+      template.status === 'coming-soon' ? 'coming soon upcoming' : 'available',
+      ...template.tags,
+    ]
+      .join(' ')
+      .toLowerCase(),
+  ]),
+)
+
 export default function HomePage() {
   const [query, setQuery] = useState('')
   const [theme, setTheme] = useState('all')
 
-  const normalizedQuery = query.trim().toLowerCase()
-  const visibleTemplates = templates
-    .filter((template) => {
-      const matchesTheme = theme === 'all' || template.theme === theme
-      const searchableText = [
-        template.name,
-        template.audience,
-        template.description,
-        template.tier === 'premium' ? 'premium' : 'standard',
-        template.status === 'coming-soon' ? 'coming soon upcoming' : 'available',
-        ...template.tags,
-      ]
-        .join(' ')
-        .toLowerCase()
+  // Keystrokes land immediately; the grid — and the previews in it — catch up
+  // at a lower priority, so the field never feels like it is lagging.
+  const deferredQuery = useDeferredValue(query)
 
-      return matchesTheme && searchableText.includes(normalizedQuery)
-    })
-    // Available templates lead the grid; upcoming ones trail it. Sort is stable,
-    // so the order inside each group stays the data order.
-    .sort(
-      (first, second) =>
-        Number(first.status === 'coming-soon') - Number(second.status === 'coming-soon'),
-    )
+  const { matchCount, sections } = useMemo(() => {
+    const normalizedQuery = deferredQuery.trim().toLowerCase()
+    const matches = templates
+      .filter(
+        (template) =>
+          (theme === 'all' || template.theme === theme) &&
+          searchIndex.get(template.id).includes(normalizedQuery),
+      )
+      // Available templates lead the grid; upcoming ones trail it. Sort is
+      // stable, so the order inside each group stays the data order.
+      .sort(
+        (first, second) =>
+          Number(first.status === 'coming-soon') - Number(second.status === 'coming-soon'),
+      )
 
-  // A tier only gets a section when the current search and filter leave
-  // something in it.
-  const visibleSections = tierSections
-    .map((section) => ({
-      ...section,
-      matches: visibleTemplates.filter((template) => template.tier === section.value),
-    }))
-    .filter((section) => section.matches.length > 0)
+    return {
+      matchCount: matches.length,
+      // A tier only gets a section when the current search and filter leave
+      // something in it.
+      sections: tierSections
+        .map((section) => ({
+          ...section,
+          matches: matches.filter((template) => template.tier === section.value),
+        }))
+        .filter((section) => section.matches.length > 0),
+    }
+  }, [deferredQuery, theme])
 
   return (
     <section className="section section-compact">
@@ -86,12 +103,12 @@ export default function HomePage() {
           </div>
 
           <p className="results-note" aria-live="polite">
-            {visibleTemplates.length} / {templates.length}
+            {matchCount} / {templates.length}
           </p>
         </div>
 
-        {visibleSections.length > 0 ? (
-          visibleSections.map((section) => (
+        {sections.length > 0 ? (
+          sections.map((section) => (
             <section
               aria-label={section.title}
               className="catalog-section"
