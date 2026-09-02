@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import PageHeader from '../components/PageHeader'
+import TikTokIcon from '../components/TikTokIcon'
 import { siteConfig } from '../data/site'
 
 export default function ContactPage() {
@@ -21,6 +22,7 @@ export default function ContactPage() {
             <li>Any changes or extra pages</li>
           </ul>
           <a className="button" href={siteConfig.tiktokUrl} rel="noreferrer" target="_blank">
+            <TikTokIcon size={14} />
             Message on TikTok
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
           </a>

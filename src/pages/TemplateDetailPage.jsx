@@ -5,6 +5,7 @@ import LivePreview from '../components/LivePreview'
 import PremiumBadge from '../components/PremiumBadge'
 import PriceTag from '../components/PriceTag'
 import ThemeBadge from '../components/ThemeBadge'
+import TikTokIcon from '../components/TikTokIcon'
 import { getTemplateById, siteConfig } from '../data/site'
 import NotFoundPage from './NotFoundPage'
 
@@ -63,6 +64,7 @@ export default function TemplateDetailPage() {
               rel="noreferrer"
               target="_blank"
             >
+              <TikTokIcon size={14} />
               Follow on TikTok
               <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
             </a>
@@ -78,6 +80,7 @@ export default function TemplateDetailPage() {
                 rel="noreferrer"
                 target="_blank"
               >
+                <TikTokIcon size={14} />
                 Order on TikTok
                 <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
               </a>

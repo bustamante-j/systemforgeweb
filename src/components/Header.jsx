@@ -1,6 +1,7 @@
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import TikTokIcon from './TikTokIcon'
 import { siteConfig } from '../data/site'
 
 const navItems = [
@@ -32,12 +33,14 @@ export default function Header() {
             </NavLink>
           ))}
           <a
+            aria-label={`Follow ${siteConfig.tiktokHandle} on TikTok (opens in a new tab)`}
             className="nav-link nav-cta"
             href={siteConfig.tiktokUrl}
             rel="noreferrer"
             target="_blank"
           >
-            TikTok
+            <TikTokIcon size={14} />
+            {siteConfig.tiktokHandle}
             <ArrowUpRight aria-hidden="true" size={13} strokeWidth={2} />
           </a>
         </nav>

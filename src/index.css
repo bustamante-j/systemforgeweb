@@ -295,7 +295,13 @@ strong {
   padding: var(--s-3) var(--s-5);
   background: var(--color-navy);
   color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: none;
   transition: background 160ms var(--ease);
+}
+
+.nav-cta .tiktok-glyph {
+  flex: none;
 }
 
 .nav-cta::after {
@@ -396,6 +402,10 @@ strong {
 }
 
 .button-muted:hover svg {
+  transform: none;
+}
+
+.button:hover .tiktok-glyph {
   transform: none;
 }
 
@@ -1021,6 +1031,18 @@ strong {
 
 .footer-links a:hover {
   color: #fff;
+}
+
+.footer-links a.footer-tiktok {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.footer-tiktok .tiktok-glyph {
+  flex: none;
 }
 
 /* ---------- Responsive ---------- */

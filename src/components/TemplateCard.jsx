@@ -6,6 +6,7 @@ import LivePreview from './LivePreview'
 import PremiumBadge from './PremiumBadge'
 import PriceTag from './PriceTag'
 import ThemeBadge from './ThemeBadge'
+import TikTokIcon from './TikTokIcon'
 
 export default function TemplateCard({ template }) {
   const isPremium = template.tier === 'premium'
@@ -36,6 +37,7 @@ export default function TemplateCard({ template }) {
           rel="noreferrer"
           target="_blank"
         >
+          <TikTokIcon size={14} />
           Follow on TikTok
           <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
         </a>

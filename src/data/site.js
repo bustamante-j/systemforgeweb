@@ -1,7 +1,7 @@
 export const siteConfig = {
   brandName: 'System Forge',
-  tiktokHandle: '@systemforge1',
-  tiktokUrl: 'https://www.tiktok.com/@systemforge1',
+  tiktokHandle: '@system_forgeee',
+  tiktokUrl: 'https://www.tiktok.com/@system_forgeee',
 }
 
 // `price` is in Philippine pesos; only 'available' templates have one.
