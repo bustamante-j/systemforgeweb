@@ -214,9 +214,7 @@ export default function LandingPage() {
           </h2>
 
           <div className="cta-foot">
-            <p data-reveal="up">
-              Every template on the shelf is running live before you order it.
-            </p>
+            <p data-reveal="up">Every template is running live before you order it.</p>
 
             <div className="cta-actions" data-stagger>
               <Link className="button" to="/templates">

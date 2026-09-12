@@ -16,15 +16,15 @@ const live = templates.filter((template) => template.status === 'available').len
 const claims = [
   {
     label: 'Build',
-    text: 'Every template is a complete, responsive website — not a page mockup.',
+    text: 'A complete, responsive website — not a page mockup.',
   },
   {
     label: 'Proof',
-    text: 'The demos stay public, so you see the real thing before you pay anything.',
+    text: 'Public demos — you see the real thing before you pay.',
   },
   {
     label: 'Process',
-    text: 'Content and changes are worked out one to one, over TikTok messages.',
+    text: 'Content and changes, worked out over TikTok.',
   },
 ]
 
@@ -36,10 +36,8 @@ export default function AboutPage() {
     <div ref={root}>
       <PageHeader eyebrow="About" title="System Forge">
         <p>
-          We build websites and sell them as finished templates — esports, interactive,
-          business, and portfolio. There are{' '}
-          <strong>{live} live</strong> right now, each one running on the catalog page so
-          you can look before you order.
+          Finished websites, sold as templates. <strong>{live} live</strong> right now,
+          each one running on the catalog page.
         </p>
       </PageHeader>
 
@@ -70,8 +68,7 @@ export default function AboutPage() {
 
           <div className="cta-foot">
             <p data-reveal="up">
-              The catalog is the honest version of this pitch: {live} finished websites,
-              each one running rather than described.
+              {live} finished websites, running rather than described.
             </p>
 
             <div className="cta-actions" data-stagger>

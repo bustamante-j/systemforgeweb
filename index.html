@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="Ready-to-use website templates from System Forge — esports, interactive, business, and portfolio sites, every one running live on the page before you order."
+      content="Ready-to-use website templates — esports, interactive, business, and portfolio, every one running live on the page."
     />
     <meta name="theme-color" content="#f5f3ef" />
     <meta name="color-scheme" content="light" />
@@ -32,12 +32,14 @@
       crossorigin
     />
 
-    <!-- Every card preview is an iframe on this origin: warm the connection now
-         rather than when the first one scrolls into view. -->
+    <!-- Every card preview is an iframe on one of these two origins: warm the
+         connections now rather than when the first frame scrolls into view. -->
     <link rel="preconnect" href="https://systemforge1.github.io" />
     <link rel="dns-prefetch" href="https://systemforge1.github.io" />
+    <link rel="preconnect" href="https://randmtiles.vercel.app" />
+    <link rel="dns-prefetch" href="https://randmtiles.vercel.app" />
 
-    <title>System Forge — Website templates, running live</title>
+    <title>System Forge</title>
   </head>
   <body>
     <div id="root"></div>

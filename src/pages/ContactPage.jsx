@@ -16,7 +16,7 @@ export default function ContactPage() {
       <PageHeader eyebrow="Contact" title="Order a template">
         <p>
           Message <strong>{siteConfig.tiktokHandle}</strong> with the template name or a
-          screenshot. Seven steps, start to finished link.
+          screenshot.
         </p>
       </PageHeader>
 
@@ -33,10 +33,7 @@ export default function ContactPage() {
           <OrderSteps />
 
           <div className="notice">
-            <p>
-              You can also send the whole amount at the start — steps 3 and 6 then become a
-              single payment.
-            </p>
+            <p>Paying in full at the start merges steps 3 and 6.</p>
           </div>
 
           <a className="button" href={siteConfig.tiktokUrl} rel="noreferrer" target="_blank">
