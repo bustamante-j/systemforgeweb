@@ -8,10 +8,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // The catalog is edited far more often than its dependencies change, so
-        // React and the router get a chunk of their own. Adding a template then
-        // ships a few kilobytes to returning visitors instead of re-downloading
-        // the framework behind it.
-        manualChunks: (id) => (id.includes('node_modules') ? 'vendor' : undefined),
+        // the libraries get chunks of their own. Adding a template then ships a
+        // few kilobytes to returning visitors instead of re-downloading the
+        // framework behind it. GSAP is split out separately from React because
+        // the two move on completely different release cycles.
+        manualChunks: (id) => {
+          if (!id.includes('node_modules')) {
+            return undefined
+          }
+
+          const path = id.split('\\').join('/')
+          return path.includes('/node_modules/gsap/') || path.includes('/node_modules/@gsap/')
+            ? 'motion'
+            : 'vendor'
+        },
       },
     },
   },

@@ -6,12 +6,14 @@ export default function LicensePage() {
       <PageHeader eyebrow="Legal" title="Template licensing">
         <p>Licensing terms are confirmed with each customer before purchase.</p>
       </PageHeader>
-      <section className="section section-compact">
-        <div className="container content-block">
-          <p className="notice">
+      <section className="section">
+        <div className="container content-block prose">
+          <div className="notice">
+            <p>
             No template files or ownership rights are granted merely by viewing a
             demo. Your final written agreement with System Forge controls your use.
           </p>
+          </div>
           <h2>Before you buy</h2>
           <p>
             Ask which files are included, how many websites the template may be used

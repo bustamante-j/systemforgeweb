@@ -4,8 +4,8 @@ export default function ThemeBadge({ theme }) {
   const Icon = theme === 'dark' ? Moon : Sun
 
   return (
-    <span className={theme === 'dark' ? 'theme-badge theme-badge-dark' : 'theme-badge'}>
-      <Icon aria-hidden="true" size={12} strokeWidth={2} />
+    <span className={theme === 'dark' ? 'badge badge-theme-dark' : 'badge'}>
+      <Icon aria-hidden="true" size={11} strokeWidth={1.5} />
       {theme === 'dark' ? 'Dark' : 'Light'}
     </span>
   )

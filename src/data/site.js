@@ -138,6 +138,9 @@ export const templates = [
     theme: 'light',
     tier: 'premium',
     status: 'available',
+    // `featured` picks the template the home page hero forges. Exactly one
+    // template should carry it; the hero falls back to the first available.
+    featured: true,
     price: 200,
     description:
       'A print-inspired portfolio in stark black, white, and signal yellow, built around a numbered index and a hover-driven project list for people who ship technical work.',
@@ -195,4 +198,11 @@ export const templates = [
 
 export function getTemplateById(templateId) {
   return templates.find((template) => template.id === templateId)
+}
+
+// The theme already has a badge of its own, so the tag that repeats it is
+// dropped from the list. The search index still carries it — filtering the
+// display must not make a template unfindable by the word on it.
+export function visibleTags(template) {
+  return template.tags.filter((tag) => tag.toLowerCase() !== template.theme)
 }

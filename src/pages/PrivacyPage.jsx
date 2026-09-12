@@ -6,8 +6,8 @@ export default function PrivacyPage() {
       <PageHeader eyebrow="Legal" title="Privacy">
         <p>System Forge does not collect customer information through this website.</p>
       </PageHeader>
-      <section className="section section-compact">
-        <div className="container content-block">
+      <section className="section">
+        <div className="container content-block prose">
           <h2>Information collection</h2>
           <p>
             This version of the website has no accounts, contact forms, database, or

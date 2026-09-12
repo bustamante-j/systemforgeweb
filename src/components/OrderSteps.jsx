@@ -3,6 +3,10 @@ import { orderSteps } from '../data/site'
 export default function OrderSteps() {
   return (
     <ol className="order-steps">
+      {/* The steps really are a sequence, so a line runs through them — drawn
+          as the reader scrolls rather than sitting there already finished. */}
+      <span className="order-rail" aria-hidden="true" data-reveal="rail" />
+
       {orderSteps.map((step, index) => (
         <li className="order-step" key={step.title}>
           <span className="order-step-number" aria-hidden="true">

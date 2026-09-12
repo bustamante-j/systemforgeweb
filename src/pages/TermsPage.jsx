@@ -6,8 +6,8 @@ export default function TermsPage() {
       <PageHeader eyebrow="Legal" title="Terms">
         <p>These basic terms apply to the System Forge catalog website.</p>
       </PageHeader>
-      <section className="section section-compact">
-        <div className="container content-block">
+      <section className="section">
+        <div className="container content-block prose">
           <h2>Catalog purpose</h2>
           <p>
             This website lets visitors browse template demonstrations. Displaying a

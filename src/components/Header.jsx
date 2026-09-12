@@ -1,100 +1,78 @@
-import { ArrowUpRight, Menu, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useGSAP } from '@gsap/react'
+import { ArrowUpRight, Menu } from 'lucide-react'
+import { useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import TikTokIcon from './TikTokIcon'
+import { gsap, ScrollTrigger } from '../lib/motion'
+import { navItems } from '../data/nav'
 import { siteConfig } from '../data/site'
+import BrandMark from './BrandMark'
+import TikTokIcon from './TikTokIcon'
 
-const navItems = [
-  { to: '/', label: 'Templates', end: true },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
-]
+export default function Header({ navOpen, onToggleNav, toggleRef }) {
+  const root = useRef(null)
 
-export default function Header() {
-  const [open, setOpen] = useState(false)
+  useGSAP(
+    () => {
+      // Read position straight onto a transform. A scroll listener writing
+      // width would lay the page out again on every frame; this is one
+      // composited scale that the browser can keep off the main thread.
+      const progress = root.current.querySelector('.header-progress')
 
-  useEffect(() => {
-    if (!open) {
-      return undefined
-    }
+      const trigger = ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: (self) => gsap.set(progress, { scaleX: self.progress }),
+      })
 
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setOpen(false)
-      }
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [open])
+      return () => trigger.kill()
+    },
+    { scope: root },
+  )
 
   return (
-    <>
-      <header className="site-header">
-        <div className="container header-inner">
-          <Link className="brand-link" to="/" aria-label="System Forge home">
-            <img
-              className="brand-logo"
-              src="/system-forge-logo.svg"
-              alt="System Forge"
-              width="124"
-              height="28"
-            />
-          </Link>
+    <header className="site-header" ref={root}>
+      <div className="container header-inner">
+        <Link className="brand-link" to="/" aria-label="System Forge home">
+          <BrandMark />
+          <span className="brand-wordmark" aria-hidden="true">
+            <span>System</span>
+            <span>Forge</span>
+          </span>
+        </Link>
 
-          <nav
-            aria-label="Main navigation"
-            className="site-nav"
-            data-open={open}
-            id="main-nav"
-            onClick={() => setOpen(false)}
+        <nav aria-label="Main navigation" className="site-nav">
+          {navItems.map(({ to, label, end }) => (
+            <NavLink className="nav-link" end={end} key={to} to={to}>
+              {label}
+            </NavLink>
+          ))}
+          <a
+            aria-label={`Follow ${siteConfig.tiktokHandle} on TikTok (opens in a new tab)`}
+            className="nav-link nav-cta"
+            href={siteConfig.tiktokUrl}
+            rel="noreferrer"
+            target="_blank"
           >
-            {navItems.map(({ to, label, end }) => (
-              <NavLink className="nav-link" end={end} key={to} to={to}>
-                {label}
-              </NavLink>
-            ))}
-            <a
-              aria-label={`Follow ${siteConfig.tiktokHandle} on TikTok (opens in a new tab)`}
-              className="nav-link nav-cta"
-              href={siteConfig.tiktokUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <TikTokIcon size={14} />
-              {siteConfig.tiktokHandle}
-              <ArrowUpRight aria-hidden="true" size={13} strokeWidth={2} />
-            </a>
-          </nav>
+            <TikTokIcon size={13} />
+            {siteConfig.tiktokHandle}
+            <ArrowUpRight aria-hidden="true" size={12} strokeWidth={1.75} />
+          </a>
+        </nav>
 
-          <button
-            aria-controls="main-nav"
-            aria-expanded={open}
-            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
-            className="nav-toggle"
-            onClick={() => setOpen((value) => !value)}
-            type="button"
-          >
-            {open ? (
-              <X aria-hidden="true" size={20} strokeWidth={1.75} />
-            ) : (
-              <Menu aria-hidden="true" size={20} strokeWidth={1.75} />
-            )}
-          </button>
-        </div>
-      </header>
+        <button
+          aria-controls="nav-overlay"
+          aria-expanded={navOpen}
+          aria-label="Open navigation menu"
+          className="nav-toggle"
+          onClick={onToggleNav}
+          ref={toggleRef}
+          type="button"
+        >
+          <Menu aria-hidden="true" size={18} strokeWidth={1.5} />
+        </button>
+      </div>
 
-      {/* Tap anywhere to close, and it swallows scrolls that start over the
-          catalog while the menu is open. The toggle is the keyboard way out,
-          alongside Escape, so this stays off the tab order. */}
-      <button
-        aria-hidden="true"
-        className="nav-scrim"
-        data-open={open}
-        onClick={() => setOpen(false)}
-        tabIndex={-1}
-        type="button"
-      />
-    </>
+      <div className="header-progress" aria-hidden="true" />
+    </header>
   )
 }
