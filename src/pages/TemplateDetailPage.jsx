@@ -53,7 +53,7 @@ export default function TemplateDetailPage() {
   return (
     <div ref={root}>
       <div className="container case-head">
-        <Link className="text-link back-link" to="/">
+        <Link className="text-link back-link" to="/templates">
           <ArrowLeft aria-hidden="true" size={12} strokeWidth={1.75} />
           All templates
         </Link>
@@ -159,7 +159,7 @@ export default function TemplateDetailPage() {
             <div>
               <p className="eyebrow">Category</p>
               <p className="case-category">
-                <Link to="/">{shelf.label}</Link>
+                <Link to="/templates">{shelf.label}</Link>
                 {shelf.blurb ? <span>{shelf.blurb}</span> : null}
               </p>
             </div>

@@ -50,7 +50,7 @@ const searchIndex = new Map(
   ]),
 )
 
-export default function HomePage() {
+export default function CatalogPage() {
   const root = useRef(null)
   const shelvesRef = useRef(null)
   const firstPass = useRef(true)
@@ -124,9 +124,10 @@ export default function HomePage() {
 
   return (
     <div ref={root}>
-      {/* No hero, and no page title above the shelves either — the catalog is
-          the page. The heading stays for the document outline and for anyone
-          arriving by screen reader. */}
+      {/* No page title above the shelves: the tab you pressed to get here is
+          the title, and the filter bar is the first thing worth touching. The
+          heading stays for the document outline and for anyone arriving by
+          screen reader. */}
       <h1 className="sr-only">Templates</h1>
 
       {/* Bar and shelves share one section, which is what keeps the sticky bar

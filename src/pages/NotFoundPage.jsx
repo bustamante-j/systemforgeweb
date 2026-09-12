@@ -8,7 +8,7 @@ export default function NotFoundPage() {
         <p className="eyebrow">Error 404</p>
         <h1 className="page-title display">Nothing here</h1>
         <p>That page does not exist. The catalog does.</p>
-        <Link className="button" to="/">
+        <Link className="button" to="/templates">
           <span>Browse templates</span>
           <ArrowRight aria-hidden="true" size={13} strokeWidth={1.75} />
         </Link>

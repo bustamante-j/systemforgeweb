@@ -2036,6 +2036,225 @@ strong {
   overflow: clip;
 }
 
+/* ---------- Landing hero ---------- */
+
+/* The tall block the forge travels through: its height *is* the length of the
+   sequence. The stage inside it is held by position: sticky rather than pinned
+   by script — the browser does that off the main thread for free, and there is
+   no pin-spacer to go stale when a route change refreshes the triggers. */
+.landing-hero {
+  /* The shell reserves the fixed header's height for every page. The hero
+     takes that reservation straight back and runs underneath it. */
+  margin-top: calc(var(--header-h) * -1);
+  height: 230vh;
+  position: relative;
+}
+
+.hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+/* The canvas is the picture, so nothing is laid over the middle of it: the
+   copy takes the bottom of the stage and the cloud keeps the rest. */
+.forge {
+  position: absolute;
+  /* Clear of the header at the top and of the copy band at the bottom, so the
+     figure is never half under the fixed bar or sitting on the headline. */
+  top: var(--header-h);
+  right: 0;
+  bottom: 24%;
+  left: 0;
+  z-index: 0;
+}
+
+.forge-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Before the scene paints — and for a visitor on reduced motion or without
+   WebGL, who never gets one — the stage is not empty: the same figure, drawn
+   flat in dots by the stylesheet, which dissolves when the real one arrives. */
+.forge::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(46vmin, 380px);
+  aspect-ratio: 1;
+  max-width: 100%;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background-image: radial-gradient(circle, var(--rule-strong) 0.8px, transparent 1.3px);
+  background-size: 15px 15px;
+  transition: opacity 700ms var(--ease);
+}
+
+.forge[data-status="ready"]::after {
+  opacity: 0;
+}
+
+.hero-band {
+  position: relative;
+  z-index: 1;
+  padding-bottom: var(--s-8);
+}
+
+.hero-band-rule {
+  display: block;
+  height: 1px;
+  margin-bottom: var(--s-5);
+  background: var(--rule);
+  transform-origin: 0 50%;
+}
+
+.hero-band-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--s-5) var(--s-7);
+}
+
+/* The one other place on the site the expanded cut is set loud. It bookends
+   the footer wordmark: the site opens and closes on the same voice. */
+.hero-title {
+  font-size: clamp(2.25rem, 6.5vw, 5rem);
+  color: var(--ink);
+}
+
+.hero-side {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+}
+
+/* What the cloud is doing, in two words. */
+.hero-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-steps li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  transition: opacity 420ms var(--ease);
+}
+
+.hero-steps b {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ember);
+}
+
+.hero-steps span {
+  transition: color 420ms var(--ease);
+}
+
+/* The dimming only exists once the scroll has written a step onto the row, so
+   a visitor with no JS — or on reduced motion, where the scrub never runs —
+   reads three labels at full strength rather than one label and two ghosts. */
+.hero-steps[data-step] li {
+  opacity: 0.3;
+}
+
+.hero-steps[data-step="0"] li:first-child,
+.hero-steps[data-step="1"] li:nth-child(2),
+.hero-steps[data-step="2"] li:nth-child(3) {
+  opacity: 1;
+}
+
+.hero-steps[data-step="0"] li:first-child span,
+.hero-steps[data-step="1"] li:nth-child(2) span,
+.hero-steps[data-step="2"] li:nth-child(3) span {
+  color: var(--ink);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-4);
+  z-index: 1;
+  transform: translateX(-50%);
+  font-size: 0.5625rem;
+  text-align: center;
+}
+
+.hero-cue::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 18px;
+  margin: var(--s-2) auto 0;
+  background: linear-gradient(var(--rule-strong), transparent);
+}
+
+/* ---------- Landing sections ---------- */
+
+.featured-foot {
+  max-width: none;
+  margin: var(--s-6) 0 0;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+
+/* Three moves, three words each. The contact page carries the long version;
+   this is only the shape of it. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-6) var(--s-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.steps li {
+  display: grid;
+  gap: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+.steps b {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.steps span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: var(--wdth-normal);
+  font-size: clamp(1.25rem, 2.6vw, 1.875rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1080px) {
@@ -2130,13 +2349,46 @@ strong {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: var(--s-5);
   }
+
+  /* A shorter run for the forge: the same three states, but reached with a
+     phone's worth of scrolling rather than a desktop's. */
+  .landing-hero {
+    height: 195vh;
+  }
+
+  .hero-band-inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--s-5);
+  }
+
+  .hero-band {
+    padding-bottom: var(--s-7);
+  }
+
+  .forge {
+    bottom: 34%;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 600px) {
   .card-actions .button,
   .case-actions .button,
-  .cta-actions .button {
+  .cta-actions .button,
+  .hero-actions .button {
     flex: 1 1 100%;
+  }
+
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-cue {
+    display: none;
   }
 
   .cta-foot {
@@ -2194,5 +2446,32 @@ strong {
 
   .card:hover {
     transform: none;
+  }
+
+  /* No scrub is built, so the canvas never moves and the tall block would be
+     dead scroll. The stage becomes one ordinary screen instead. */
+  .landing-hero {
+    height: auto;
+    margin-top: 0;
+  }
+
+  .hero-stage {
+    position: relative;
+    height: auto;
+    min-height: min(560px, 70dvh);
+    padding-top: var(--s-9);
+  }
+
+  /* With nothing scrolling over it, the figure joins the flow above the copy
+     instead of being laid across it. */
+  .forge {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    min-height: 240px;
+  }
+
+  .forge::after {
+    width: min(34vmin, 260px);
   }
 }

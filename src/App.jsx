@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import { EASE_OUT, gsap, prefersReducedMotion, ScrollTrigger } from './lib/motion'
 import AboutPage from './pages/AboutPage'
+import CatalogPage from './pages/CatalogPage'
 import ContactPage from './pages/ContactPage'
-import HomePage from './pages/HomePage'
+import LandingPage from './pages/LandingPage'
 import LicensePage from './pages/LicensePage'
 import NotFoundPage from './pages/NotFoundPage'
 import PrivacyPage from './pages/PrivacyPage'
@@ -60,8 +61,10 @@ function App() {
       <RouteTransition />
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="templates" element={<HomePage />} />
+          {/* The front door is the landing page now; the catalog is a
+              destination you navigate to rather than the thing you land on. */}
+          <Route index element={<LandingPage />} />
+          <Route path="templates" element={<CatalogPage />} />
           <Route path="templates/:templateId" element={<TemplateDetailPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />

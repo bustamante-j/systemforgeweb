@@ -14,9 +14,14 @@ export const siteConfig = {
 // catalog appends the unknown shelf at the end rather than dropping the card.
 export const categories = [
   {
-    value: 'portfolio',
-    label: 'Portfolio',
-    blurb: 'Personal sites for showing work, experience, and how to hire you.',
+    value: 'esports',
+    label: 'Esports',
+    blurb: 'Team, roster, and gaming creator pages built for a louder audience.',
+  },
+  {
+    value: 'interactive',
+    label: 'Interactive',
+    blurb: 'Scroll- and drag-driven pieces where the page is the thing you use.',
   },
   {
     value: 'business',
@@ -24,9 +29,9 @@ export const categories = [
     blurb: 'Sites for a company or a service — what you offer and how to buy it.',
   },
   {
-    value: 'esports',
-    label: 'Esports',
-    blurb: 'Team, roster, and gaming creator pages built for a louder audience.',
+    value: 'portfolio',
+    label: 'Portfolio',
+    blurb: 'Personal sites for showing work, experience, and how to hire you.',
   },
 ]
 
@@ -247,6 +252,44 @@ export const templates = [
     ],
   },
   {
+    id: 'depth',
+    name: 'Depth',
+    audience: 'Science communicators and climate educators',
+    category: 'interactive',
+    theme: 'dark',
+    tier: 'premium',
+    status: 'available',
+    description:
+      'A 3D sea-level exhibit for the Philippines. Drag the tide staff to raise the water up to fifty metres and watch the archipelago transect go under, with the method and its limits stated on the page.',
+    demoUrl: 'https://systemforge1.github.io/depth/',
+    tags: ['Dark', 'WebGL', 'Data exhibit'],
+    features: [
+      'Draggable tide staff from zero to fifty metres of sea level',
+      'Orbitable 3D terrain with an archipelago transect view',
+      'Encroachment readouts and population figures that track the water',
+      'Method, sources, and a plain statement of what the model leaves out',
+    ],
+  },
+  {
+    id: 'scale',
+    name: 'Scale',
+    audience: 'Educators and science storytellers',
+    category: 'interactive',
+    theme: 'dark',
+    tier: 'premium',
+    status: 'available',
+    description:
+      'A scroll-driven journey through eighteen stages of size, from the smallest structures we can describe out to the observable universe, on one continuous zoom.',
+    demoUrl: 'https://systemforge1.github.io/scale/',
+    tags: ['Dark', 'Scroll-driven', 'Science explainer'],
+    features: [
+      'Eighteen stages, smallest to largest, on a single continuous scroll',
+      'A stage counter and a fact panel that follow the zoom',
+      'Jump to any stage, restart the journey, or mute the sound',
+      'Responsive layout with both scroll and keyboard navigation',
+    ],
+  },
+  {
     id: 'soft-studio',
     name: 'Soft Studio',
     audience: 'Photographers and creative studios',
@@ -271,6 +314,15 @@ export const templates = [
     tags: ['Dark', 'Neon', 'Showcase portfolio'],
   },
 ]
+
+// The three templates the landing page puts on the floor, in the order they are
+// laid out there. Data, like everything else here: swapping what the front door
+// shows is a change to this list and nothing else.
+export const featuredIds = ['blckvoid', 'scale', 'depth']
+
+export function featuredTemplates() {
+  return featuredIds.map(getTemplateById).filter(Boolean)
+}
 
 export function getTemplateById(templateId) {
   return templates.find((template) => template.id === templateId)

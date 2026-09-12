@@ -18,6 +18,15 @@ export default defineConfig({
           }
 
           const path = id.split('\\').join('/')
+
+          // three is reached only through the landing page's dynamic import.
+          // Naming a chunk for it here would hoist it into a static one and
+          // hand the whole renderer to every visitor of every page, so it is
+          // left for Rollup to place with the async chunk that asks for it.
+          if (path.includes('/node_modules/three/')) {
+            return undefined
+          }
+
           return path.includes('/node_modules/gsap/') || path.includes('/node_modules/@gsap/')
             ? 'motion'
             : 'vendor'

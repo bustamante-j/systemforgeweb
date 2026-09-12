@@ -36,8 +36,8 @@ export default function AboutPage() {
     <div ref={root}>
       <PageHeader eyebrow="About" title="System Forge">
         <p>
-          We build websites and sell them as finished templates — portfolio, business,
-          and esports. There are{' '}
+          We build websites and sell them as finished templates — esports, interactive,
+          business, and portfolio. There are{' '}
           <strong>{live} live</strong> right now, each one running on the catalog page so
           you can look before you order.
         </p>
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
 
             <div className="cta-actions" data-stagger>
-              <Link className="button" to="/">
+              <Link className="button" to="/templates">
                 <span>Browse templates</span>
               </Link>
               <a
