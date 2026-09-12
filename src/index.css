@@ -134,10 +134,12 @@
   --wdth-normal: 100%;
   --wdth-condensed: 64%;
 
-  /* Corners. Shallow on purpose: enough that a card reads as a product card,
-     not so much that the catalog turns into a sheet of pills. */
-  --radius-sm: 6px;
-  --radius: 12px;
+  /* Corners. Square on purpose: the catalog reads as drawn boxes and hairlines,
+     and a rounded corner softens that into a generic card deck. The tokens stay
+     so the whole site keeps one opinion about corners instead of scattering
+     literals — every surface, control, chip and badge points at one of them. */
+  --radius-sm: 0px;
+  --radius: 0px;
 
   /* Rhythm. A catalog is scanned rather than scrolled through, so the vertical
      spacing is tighter than an editorial page would use. */
@@ -873,7 +875,7 @@ strong {
 .preview-dots span {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   background: var(--rule-strong);
   transition: background 400ms var(--ease);
 }
@@ -1075,7 +1077,7 @@ strong {
   min-height: 40px;
   padding: 0 var(--s-4);
   border: 1px solid var(--rule);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--muted);
   font-family: var(--font-mono);
@@ -1239,7 +1241,7 @@ strong {
   right: var(--s-3);
   z-index: 3;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--ember);
   color: #fff;
   font-family: var(--font-mono);
@@ -1398,7 +1400,7 @@ strong {
   gap: 6px;
   padding: 5px 11px;
   border: 1px solid var(--rule);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   font-family: var(--font-mono);
   font-size: 0.625rem;
@@ -1451,7 +1453,7 @@ strong {
 .tag-list li {
   padding: 5px 10px;
   border: 1px solid var(--rule);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.5625rem;
