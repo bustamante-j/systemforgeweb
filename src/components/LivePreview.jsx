@@ -57,10 +57,18 @@ function pump() {
 
     for (const entry of waiting) {
       const distance = entry.distance()
-      if (distance < nearest) {
+      // `next === null` seeds the search with the first entry, which is what a
+      // queue of frames that all measure Infinity falls back to — filtering the
+      // catalog down to nothing unmounts every card at once, and each of them
+      // reports no distance on the way out.
+      if (next === null || distance < nearest) {
         nearest = distance
         next = entry
       }
+    }
+
+    if (next === null) {
+      return
     }
 
     waiting.delete(next)

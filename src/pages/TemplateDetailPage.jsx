@@ -8,16 +8,25 @@ import PremiumBadge from '../components/PremiumBadge'
 import PriceTag from '../components/PriceTag'
 import ThemeBadge from '../components/ThemeBadge'
 import TikTokIcon from '../components/TikTokIcon'
-import { getTemplateById, siteConfig, templates, visibleTags } from '../data/site'
+import {
+  categoryOf,
+  getTemplateById,
+  siteConfig,
+  templates,
+  visibleTags,
+} from '../data/site'
 import { sectionMotion } from '../lib/motion'
 import NotFoundPage from './NotFoundPage'
 
 // The next template to look at, so the detail page has somewhere to go that is
-// not the back button. Wraps around the catalog order.
+// not the back button. Prefers the next one on the same shelf and only then
+// wraps into the rest of the catalog, so browsing stays inside a category.
 function nextTemplate(current) {
   const order = templates.filter((template) => template.status === 'available')
-  const at = order.findIndex((template) => template.id === current.id)
-  return order[(at + 1) % order.length] ?? order[0]
+  const sameShelf = order.filter((template) => template.category === current.category)
+  const within = sameShelf.length > 1 ? sameShelf : order
+  const at = within.findIndex((template) => template.id === current.id)
+  return within[(at + 1) % within.length] ?? order[0]
 }
 
 export default function TemplateDetailPage() {
@@ -39,6 +48,7 @@ export default function TemplateDetailPage() {
   // resolves — there is no demo or feature list to show for them yet.
   const isComingSoon = template.status === 'coming-soon'
   const isPremium = template.tier === 'premium'
+  const shelf = categoryOf(template.category)
   const next = nextTemplate(template)
 
   return (
@@ -49,14 +59,13 @@ export default function TemplateDetailPage() {
           All templates
         </Link>
 
-        {isComingSoon || isPremium ? (
-          <div className="badge-row case-badges">
-            {isComingSoon ? <ComingSoonBadge /> : null}
-            {isPremium ? <PremiumBadge /> : null}
-          </div>
-        ) : null}
+        <div className="badge-row case-badges">
+          <span className="badge badge-category">{shelf.label}</span>
+          {isPremium ? <PremiumBadge /> : null}
+          {isComingSoon ? <ComingSoonBadge /> : null}
+        </div>
 
-        <h1 className="case-title display" data-reveal="lines">
+        <h1 className="case-title" data-reveal="lines">
           {template.name}
         </h1>
 
@@ -76,9 +85,9 @@ export default function TemplateDetailPage() {
 
       <div className="container case-stage">
         {isComingSoon ? (
-          <div className="specimen-upcoming" data-reveal="wipe">
+          <div className="case-placeholder" data-reveal="wipe">
             <ComingSoonBadge />
-            <p>No demo yet — this one is still on the press.</p>
+            <p>No demo yet — this one is still being built.</p>
           </div>
         ) : (
           <div data-reveal="wipe">
@@ -143,9 +152,19 @@ export default function TemplateDetailPage() {
             )}
           </div>
 
-          <div>
-            <p className="eyebrow">Built for</p>
-            <p className="case-audience marker">{template.audience}</p>
+          <div className="case-side">
+            <div>
+              <p className="eyebrow">Built for</p>
+              <p className="case-audience">{template.audience}</p>
+            </div>
+
+            <div>
+              <p className="eyebrow">Category</p>
+              <p className="case-category">
+                <Link to="/">{shelf.label}</Link>
+                {shelf.blurb ? <span>{shelf.blurb}</span> : null}
+              </p>
+            </div>
           </div>
         </div>
 

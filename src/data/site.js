@@ -4,6 +4,61 @@ export const siteConfig = {
   tiktokUrl: 'https://www.tiktok.com/@system_forgeee',
 }
 
+// The shelves of the shop, in the order they appear in the catalog. A template
+// is filed on exactly one of them through its `category` field, and the catalog
+// renders a section per shelf that still has something on it after the search
+// and filters run — so an empty shelf costs nothing to declare and a new one
+// only needs a row here plus templates pointing at it.
+//
+// A template carrying a category that is not listed here still shows up: the
+// catalog appends the unknown shelf at the end rather than dropping the card.
+export const categories = [
+  {
+    value: 'portfolio',
+    label: 'Portfolio',
+    blurb: 'Personal sites for showing work, experience, and how to hire you.',
+  },
+  {
+    value: 'business',
+    label: 'Business',
+    blurb: 'Sites for a company or a service — what you offer and how to buy it.',
+  },
+  {
+    value: 'esports',
+    label: 'Esports',
+    blurb: 'Team, roster, and gaming creator pages built for a louder audience.',
+  },
+]
+
+export function categoryOf(value) {
+  return (
+    categories.find((category) => category.value === value) ?? {
+      value,
+      // An unlisted category still gets a readable shelf title rather than a
+      // raw slug.
+      label: value.replace(/(^|[\s-])\w/g, (letter) => letter.toUpperCase()),
+      blurb: '',
+    }
+  )
+}
+
+// The short version of the ordering walkthrough, shown under the catalog. The
+// full seven steps live on the contact page.
+export const orderSummary = [
+  {
+    title: 'Pick a template',
+    detail: 'Browse the live previews and send us the name of the one you want.',
+  },
+  {
+    title: 'Send your details',
+    detail: 'Your content and a 50% downpayment, over TikTok messages.',
+  },
+  {
+    title: 'Get your link',
+    detail: 'We build it, you review the preview, then the site is yours.',
+  },
+]
+
 // The ordering walkthrough on the contact page, in order. `detail` is the one
 // line under a step; `items` is the checklist a step asks the buyer to send.
 export const orderSteps = [
@@ -45,20 +100,23 @@ export const orderSteps = [
   },
   {
     title: 'Get your ready-to-use link',
-    detail: 'Once payment clears, we hand over the live link to your portfolio website.',
+    detail: 'Once payment clears, we hand over the live link to your finished website.',
   },
 ]
 
+// `category` is the shelf the card is filed on — see `categories` above; it is
+// the catalog's primary organisation and what the filter chips switch between.
 // `price` is in Philippine pesos; only 'available' templates have one.
 // `status` is 'available' (live preview + order) or 'coming-soon' (teaser card:
 // no demoUrl, no features — those templates are announced on TikTok first).
-// `tier` is 'standard' or 'premium' — it picks the catalog section the template
-// lands in; premium cards also carry a badge on the card and detail page.
+// `tier` is 'standard' or 'premium'; premium cards carry a mark on the card and
+// the detail page, and the tier is one of the things search matches on.
 export const templates = [
   {
     id: 'neat-aesthetic',
     name: 'Neat Aesthetic',
     audience: 'Virtual assistants and service professionals',
+    category: 'portfolio',
     theme: 'light',
     tier: 'standard',
     status: 'available',
@@ -78,6 +136,7 @@ export const templates = [
     id: 'dark-techy',
     name: 'Dark Techy',
     audience: 'Developers, IT students, and technical creatives',
+    category: 'portfolio',
     theme: 'dark',
     tier: 'standard',
     status: 'available',
@@ -97,6 +156,7 @@ export const templates = [
     id: 'adventure-dark',
     name: 'Adventure Dark',
     audience: 'Architects, designers, and architecture students',
+    category: 'portfolio',
     theme: 'dark',
     tier: 'standard',
     status: 'available',
@@ -116,6 +176,7 @@ export const templates = [
     id: 'bnw-aesthetic',
     name: 'BnW Aesthetic',
     audience: 'Photographers and visual storytellers',
+    category: 'portfolio',
     theme: 'light',
     tier: 'premium',
     status: 'available',
@@ -135,12 +196,10 @@ export const templates = [
     id: 'modern-editorial',
     name: 'Modern Editorial',
     audience: 'Game developers and technical creatives',
+    category: 'portfolio',
     theme: 'light',
     tier: 'premium',
     status: 'available',
-    // `featured` picks the template the home page hero forges. Exactly one
-    // template should carry it; the hero falls back to the first available.
-    featured: true,
     price: 200,
     description:
       'A print-inspired portfolio in stark black, white, and signal yellow, built around a numbered index and a hover-driven project list for people who ship technical work.',
@@ -157,6 +216,7 @@ export const templates = [
     id: 'simple-medium',
     name: 'Simple Medium',
     audience: 'Call center agents and customer support professionals',
+    category: 'portfolio',
     theme: 'light',
     tier: 'premium',
     status: 'available',
@@ -176,6 +236,7 @@ export const templates = [
     id: 'soft-studio',
     name: 'Soft Studio',
     audience: 'Photographers and creative studios',
+    category: 'portfolio',
     theme: 'light',
     tier: 'standard',
     status: 'coming-soon',
@@ -187,6 +248,7 @@ export const templates = [
     id: 'neon-grid',
     name: 'Neon Grid',
     audience: 'Game developers and motion designers',
+    category: 'portfolio',
     theme: 'dark',
     tier: 'standard',
     status: 'coming-soon',

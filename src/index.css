@@ -1,10 +1,10 @@
-/* System Forge — "The Forge".
+/* System Forge — the catalog.
 
-   Dark-first industrial editorial. The page is a machine shop: cold steel
-   ground, hairline drafting rules, and one hot colour that only ever appears
-   where something is actually being worked. The live demos are the only bright
-   objects on the page, which is the whole point — they are light-emitting
-   specimens sitting in a dark room, not thumbnails in a grid. */
+   Light-first, and shaped like a shop rather than a showreel: warm paper
+   ground, white product cards on shelves you can filter, prices where prices
+   belong. The live demos inside the cards are the only pictures on the page,
+   so everything around them is kept quiet — hairline rules, one accent blue,
+   and an ember that is rationed to the premium mark and a hot hover. */
 
 /* ---------- Fonts ---------- */
 
@@ -90,36 +90,38 @@
 /* ---------- Tokens ---------- */
 
 :root {
-  /* Ground and surfaces. Cold, slightly navy-biased blacks — the old brand
-     navy taken all the way down rather than swapped for a neutral grey. */
-  --ink: #05070c;
-  --steel: #0b111c;
-  --steel-2: #141b2a;
-  --steel-3: #1d2636;
+  /* Ground and surfaces. Warm paper rather than pure white — a catalog is
+     printed on stock, and white is kept back for the cards sitting on it. */
+  --paper: #f5f3ef;
+  --paper-2: #edeae4;
+  --surface: #ffffff;
+  --surface-2: #f1efea;
+  --surface-3: #e4e1d9;
 
-  /* Text. Both clear AA on every surface above (chalk 17.2:1, graphite 6.5:1). */
-  --chalk: #e8edf7;
-  --graphite: #8593ad;
+  /* Text. Ink is 15.4:1 on paper and muted 5.6:1, so both are clear AA
+     everywhere they are used. */
+  --ink: #16181d;
+  --muted: #5c6270;
 
-  /* The two working colours. Filament is the brand blue lifted to survive on
-     black; ember is forge heat and is rationed — the strike, the premium mark,
-     and hot states only. Never both on the same element. */
-  --filament: #5b95ff;
-  --filament-deep: #2f6ee0;
-  --ember: #ff6b2e;
+  /* The two working colours. Accent is the brand blue taken down far enough to
+     hold contrast on paper; ember is rationed — the premium mark, a hot hover,
+     and nothing else. Never both on the same element. */
+  --accent: #1f4fd8;
+  --accent-deep: #163ba6;
+  --ember: #c2410c;
 
-  /* Drafting rules. Everything on this page is separated by a hairline rather
-     than a shadow or a radius. */
-  --rule: rgba(232, 237, 247, 0.1);
-  --rule-strong: rgba(232, 237, 247, 0.2);
-  --rule-filament: rgba(91, 149, 255, 0.32);
+  /* Hairlines. Things here are separated by a rule or a 1px border rather than
+     by a heavy shadow. */
+  --rule: rgba(22, 24, 29, 0.12);
+  --rule-strong: rgba(22, 24, 29, 0.26);
+  --rule-accent: rgba(31, 79, 216, 0.4);
 
-  --wash: rgba(91, 149, 255, 0.08);
-  --wash-ember: rgba(255, 107, 46, 0.1);
+  --wash: rgba(31, 79, 216, 0.07);
+  --wash-ember: rgba(194, 65, 12, 0.08);
 
-  /* The specimens are the only light sources in the room. */
-  --bloom: 0 40px 120px -50px rgba(91, 149, 255, 0.45);
-  --bloom-hot: 0 40px 120px -46px rgba(255, 107, 46, 0.45);
+  /* Cards lift off the page rather than glowing on it. */
+  --lift: 0 1px 2px rgba(22, 24, 29, 0.04), 0 14px 30px -22px rgba(22, 24, 29, 0.45);
+  --lift-hover: 0 2px 6px rgba(22, 24, 29, 0.06), 0 26px 52px -26px rgba(22, 24, 29, 0.5);
 
   /* Type */
   --font-display: Archivo, "Segoe UI", system-ui, sans-serif;
@@ -131,8 +133,13 @@
   --wdth-normal: 100%;
   --wdth-condensed: 64%;
 
-  /* Rhythm. Sections breathe hard; this is a page you scroll through, not one
-     you scan. */
+  /* Corners. Shallow on purpose: enough that a card reads as a product card,
+     not so much that the catalog turns into a sheet of pills. */
+  --radius-sm: 6px;
+  --radius: 12px;
+
+  /* Rhythm. A catalog is scanned rather than scrolled through, so the vertical
+     spacing is tighter than an editorial page would use. */
   --container: 1360px;
   --header-h: 68px;
   --gutter: clamp(1.25rem, 5vw, 4.5rem);
@@ -143,9 +150,9 @@
   --s-5: 1.5rem;
   --s-6: 2rem;
   --s-7: 3rem;
-  --s-8: 5rem;
-  --s-9: 8rem;
-  --s-10: 12rem;
+  --s-8: 4.5rem;
+  --s-9: 6.5rem;
+  --s-10: 9rem;
 
   /* Layers. Nothing invents its own z-index. */
   --z-grain: 5;
@@ -158,10 +165,10 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-press: cubic-bezier(0.32, 0.72, 0, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
   font-family: var(--font-body);
-  color: var(--chalk);
-  background: var(--ink);
+  color: var(--ink);
+  background: var(--paper);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -180,7 +187,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: var(--ink);
+  background: var(--paper);
   overflow-x: hidden;
 }
 
@@ -203,14 +210,14 @@ a {
 }
 
 a {
-  color: var(--filament);
+  color: var(--accent);
   text-underline-offset: 0.25em;
 }
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--filament);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -240,7 +247,7 @@ h4 {
   font-stretch: var(--wdth-normal);
   letter-spacing: -0.03em;
   line-height: 1.04;
-  color: var(--chalk);
+  color: var(--ink);
   text-wrap: balance;
 }
 
@@ -265,17 +272,17 @@ p {
   margin-bottom: var(--s-4);
   line-height: 1.65;
   max-width: 62ch;
-  color: var(--graphite);
+  color: var(--muted);
 }
 
 strong {
   font-weight: 600;
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 ::selection {
   background: var(--ember);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 /* ---------- Type roles ---------- */
@@ -312,7 +319,7 @@ strong {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
   max-width: none;
   margin: 0;
@@ -329,14 +336,14 @@ strong {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
 }
 
 .eyebrow::before {
   content: "";
   width: 28px;
   height: 1px;
-  background: var(--filament);
+  background: var(--accent);
   flex: none;
 }
 
@@ -374,7 +381,7 @@ strong {
   inset: 0;
   z-index: var(--z-grain);
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -385,7 +392,7 @@ strong {
   z-index: var(--z-skip);
   padding: var(--s-3) var(--s-5);
   background: var(--ember);
-  color: var(--ink);
+  color: var(--paper);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -405,8 +412,8 @@ strong {
   left: 0;
   right: 0;
   z-index: var(--z-header);
-  background: rgba(5, 7, 12, 0.94);
-  backdrop-filter: blur(18px);
+  background: rgba(245, 243, 239, 0.88);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--rule);
 }
 
@@ -426,7 +433,7 @@ strong {
   right: 0;
   bottom: -1px;
   height: 1px;
-  background: var(--filament);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: 0 50%;
   pointer-events: none;
@@ -438,7 +445,7 @@ strong {
   gap: var(--s-3);
   text-decoration: none;
   flex: none;
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 .brand-mark {
@@ -463,6 +470,16 @@ strong {
   transform: translate(2px, -2px);
 }
 
+/* The mark takes the page's colours rather than the gradients baked into the
+   standalone SVG file. */
+.brand-mark-s {
+  fill: var(--ink);
+}
+
+.brand-mark-f {
+  fill: var(--accent);
+}
+
 .brand-wordmark {
   display: flex;
   flex-direction: column;
@@ -476,7 +493,7 @@ strong {
 }
 
 .brand-wordmark span:last-child {
-  color: var(--filament);
+  color: var(--accent);
 }
 
 .site-nav {
@@ -496,7 +513,7 @@ strong {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   text-decoration: none;
   transition: color 200ms var(--ease);
 }
@@ -508,7 +525,7 @@ strong {
   right: var(--s-4);
   bottom: 12px;
   height: 1px;
-  background: var(--filament);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 260ms var(--ease);
@@ -516,7 +533,7 @@ strong {
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 .nav-link:hover::after,
@@ -528,7 +545,7 @@ strong {
   margin-left: var(--s-3);
   padding: var(--s-3) var(--s-5);
   border: 1px solid var(--rule-strong);
-  color: var(--chalk);
+  color: var(--ink);
   letter-spacing: 0.1em;
   transition: border-color 200ms var(--ease), color 200ms var(--ease),
     background 200ms var(--ease);
@@ -545,7 +562,7 @@ strong {
 .nav-cta:hover {
   border-color: var(--ember);
   background: var(--wash-ember);
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 .nav-toggle {
@@ -555,14 +572,15 @@ strong {
   width: 46px;
   height: 46px;
   border: 1px solid var(--rule-strong);
-  background: transparent;
-  color: var(--chalk);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
   cursor: pointer;
   transition: border-color 200ms var(--ease);
 }
 
 .nav-toggle:hover {
-  border-color: var(--filament);
+  border-color: var(--accent);
 }
 
 /* The mobile menu is a full takeover rather than a dropdown: the links are set
@@ -574,7 +592,7 @@ strong {
   z-index: var(--z-overlay);
   flex-direction: column;
   justify-content: center;
-  background: var(--ink);
+  background: var(--paper);
   overscroll-behavior: contain;
 }
 
@@ -622,14 +640,14 @@ strong {
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: var(--chalk);
+  color: var(--ink);
   text-decoration: none;
   transition: color 220ms var(--ease), font-stretch 320ms var(--ease);
 }
 
 .nav-overlay-link a:hover,
 .nav-overlay-link a.active {
-  color: var(--filament);
+  color: var(--accent);
   font-stretch: 78%;
 }
 
@@ -638,7 +656,7 @@ strong {
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.2em;
-  color: var(--graphite);
+  color: var(--muted);
   flex: none;
 }
 
@@ -679,7 +697,7 @@ strong {
 .section-marker-label {
   font-size: clamp(0.875rem, 1.4vw, 1.0625rem);
   letter-spacing: 0.06em;
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 /* Drawn by sectionMotion, which sets scaleX(0) itself when it builds. Left
@@ -701,9 +719,10 @@ strong {
   gap: var(--s-3);
   min-height: 50px;
   padding: var(--s-3) var(--s-6);
-  border: 1px solid var(--chalk);
-  background: var(--chalk);
-  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -734,7 +753,7 @@ strong {
 
 .button:hover {
   border-color: var(--ember);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .button:active {
@@ -759,32 +778,32 @@ strong {
 
 .button-secondary {
   background: transparent;
-  color: var(--chalk);
+  color: var(--ink);
   border-color: var(--rule-strong);
 }
 
 .button-secondary::before {
-  background: var(--chalk);
+  background: var(--ink);
 }
 
 .button-secondary:hover {
-  border-color: var(--chalk);
-  color: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 .button-ghost {
   background: transparent;
-  color: var(--chalk);
+  color: var(--ink);
   border-color: var(--rule);
 }
 
 .button-ghost::before {
-  background: var(--filament);
+  background: var(--accent);
 }
 
 .button-ghost:hover {
-  border-color: var(--filament);
-  color: var(--ink);
+  border-color: var(--accent);
+  color: var(--paper);
 }
 
 /* Small mono links that behave like controls. */
@@ -797,13 +816,13 @@ strong {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   text-decoration: none;
   transition: color 200ms var(--ease);
 }
 
 .text-link:hover {
-  color: var(--filament);
+  color: var(--accent);
 }
 
 .text-link svg {
@@ -825,12 +844,12 @@ strong {
 
 /* ---------- Live preview frame ---------- */
 
-/* The one bright object in a dark room. The chrome is a machined tray and the
-   demo is the plate sitting in it. */
+/* The picture on the product card: a browser tray with a whole third-party
+   site rendered inside it. It carries no border of its own — inside a card the
+   card's border is the frame, and the detail page adds one back. */
 .preview-frame {
   position: relative;
-  background: var(--steel);
-  border: 1px solid var(--rule-strong);
+  background: var(--surface-2);
   overflow: hidden;
   transition: border-color 400ms var(--ease), box-shadow 500ms var(--ease);
 }
@@ -841,7 +860,7 @@ strong {
   gap: var(--s-3);
   padding: var(--s-3) var(--s-4);
   border-bottom: 1px solid var(--rule);
-  background: var(--steel);
+  background: var(--surface-2);
 }
 
 .preview-dots {
@@ -871,7 +890,7 @@ strong {
   font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.06em;
-  color: var(--graphite);
+  color: var(--muted);
 }
 
 .preview-viewport {
@@ -879,7 +898,7 @@ strong {
   /* Matches the 1280x800 demo viewport, so the scaled iframe fills it exactly. */
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: var(--steel);
+  background: var(--surface-2);
   /* What sits inside is a whole third-party page rendered at 1280x800 and
      scaled down, so it is the most expensive box on the catalog. Containment
      keeps its layout and paint off the rest of the page, and
@@ -900,7 +919,7 @@ strong {
   bottom: 0;
   left: 0;
   width: 55%;
-  background: linear-gradient(90deg, transparent, var(--wash), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
   animation: preview-sweep 1900ms var(--ease) infinite;
 }
 
@@ -928,7 +947,7 @@ strong {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   transition: opacity 500ms var(--ease);
 }
 
@@ -965,422 +984,94 @@ strong {
 .preview-link {
   position: relative;
   display: block;
+  /* Holds the "view template" bar off the bottom edge until it slides up. */
+  overflow: hidden;
   text-decoration: none;
 }
 
-.preview-link:hover .preview-frame,
-.preview-link:focus-visible .preview-frame {
-  border-color: var(--rule-filament);
-  box-shadow: var(--bloom);
+/* ---------- Catalog head ---------- */
+
+/* No hero. The catalog opens with what it is, one line about how it works, and
+   a count read off the data — then the shelves start. */
+.catalog-intro {
+  padding-top: var(--s-8);
+  padding-bottom: var(--s-6);
 }
 
-/* ---------- Signature: the forge ---------- */
-
-/* The hero is one pinned stage and a long scroll track. Everything inside is
-   positioned absolutely against the stage so the scrubbed timeline only ever
-   writes transforms and opacity. */
-.forge {
-  position: relative;
-  margin-top: calc(var(--header-h) * -1);
-  border-bottom: 1px solid var(--rule);
-}
-
-.forge-track {
-  height: 340vh;
-}
-
-.forge-stage {
-  position: relative;
-  height: 100dvh;
-  min-height: 540px;
-  overflow: hidden;
-}
-
-/* Drafting paper, drawn in CSS rather than shipped as an image. */
-.forge-grid {
-  position: absolute;
-  inset: -1px;
-  pointer-events: none;
-  opacity: 0;
-  background-image: linear-gradient(var(--rule) 1px, transparent 1px),
-    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
-  background-size: 88px 88px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 100%);
-}
-
-/* The heat. Opacity is the only thing animated on it. */
-.forge-heat {
-  position: absolute;
-  left: 50%;
-  top: 58%;
-  width: min(150vw, 1500px);
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(
-    circle,
-    rgba(255, 107, 46, 0.4) 0%,
-    rgba(255, 107, 46, 0.13) 28%,
-    transparent 62%
-  );
-}
-
-/* The lockup sits in its own full-stage overlay above the scene, so the two
-   layers can be choreographed against each other without either one affecting
-   the other's layout. */
-.forge-inner {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
+/* Wide enough, and the count sits beside the introduction rather than under
+   it — half the height, and the first row of products stays on screen. */
+.catalog-intro-inner {
   display: grid;
-  place-items: center;
-  padding-left: max(var(--gutter), env(safe-area-inset-left));
-  padding-right: max(var(--gutter), env(safe-area-inset-right));
-  pointer-events: none;
+  gap: var(--s-6);
 }
 
-/* --- The lockup --- */
-
-.forge-lockup {
-  width: 100%;
-  max-width: var(--container);
-  text-align: center;
+@media (min-width: 1081px) {
+  .catalog-intro-inner {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--s-8);
+  }
 }
 
-.forge-eyebrow {
+.catalog-title {
+  font-size: clamp(2.125rem, 5vw, 3.5rem);
+  letter-spacing: -0.035em;
+  max-width: 18ch;
+  margin-bottom: var(--s-4);
+}
+
+.catalog-lede {
+  font-size: 1.0625rem;
+  max-width: 58ch;
+  margin-bottom: var(--s-6);
+}
+
+.catalog-stats {
   display: flex;
-  justify-content: center;
+  align-content: end;
   flex-wrap: wrap;
-  max-width: none;
-  gap: var(--s-4);
-  margin-bottom: clamp(var(--s-4), 2vh, var(--s-6));
-  font-family: var(--font-mono);
-  font-size: clamp(0.5625rem, 1.1vw, 0.6875rem);
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--graphite);
-}
-
-.forge-eyebrow b {
-  color: var(--ember);
-  font-weight: 500;
-}
-
-.forge-title {
-  font-size: clamp(3.25rem, 15.5vw, 13.5rem);
-  line-height: 0.82;
-  color: var(--chalk);
-}
-
-/* Each line is a clipping box around a word that can move independently: that
-   is what lets the lockup rise out of nothing at the start and part like a
-   pair of dies at the end. The padding gives the caps room inside the clip;
-   the negative margin takes the same space back out of the layout so the two
-   lines still sit tight against each other. */
-.forge-line {
-  display: block;
-  overflow: clip;
-  padding-block: 0.09em;
-  margin-block: -0.06em;
-}
-
-.forge-line > span {
-  display: block;
-}
-
-.forge-line-b {
-  color: var(--filament);
-}
-
-.forge-sub {
-  max-width: 34ch;
-  margin: clamp(var(--s-4), 3vh, var(--s-6)) auto 0;
-  font-size: clamp(0.875rem, 1.5vw, 1.0625rem);
-  line-height: 1.55;
-  color: var(--graphite);
-  text-wrap: balance;
-}
-
-/* --- The billet: plates in real depth --- */
-
-.forge-scene {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  perspective: 1500px;
-  perspective-origin: 50% 46%;
-  pointer-events: none;
-}
-
-/* Billet, shockwave and output share one grid cell so they are centred on the
-   same point — the seam the plates fuse at is exactly where the live site
-   opens from. */
-.forge-scene > * {
-  grid-area: 1 / 1;
-}
-
-.forge-billet {
-  position: relative;
-  width: min(72vw, 720px);
-  aspect-ratio: 16 / 10;
-  transform-style: preserve-3d;
-}
-
-/* A plate is a hairline schematic of one template — not an image of it, a
-   drawing of it. Cheap enough that five of them in 3D cost nothing. */
-.forge-plate {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  background: rgba(9, 14, 24, 0.92);
-  border: 1px solid rgba(232, 237, 247, 0.26);
-  /* A cold edge-light down the top of each plate, so a stack of six reads as
-     six objects rather than one dark smear. */
-  box-shadow: inset 0 1px 0 rgba(232, 237, 247, 0.14), 0 20px 60px -30px rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  backface-visibility: hidden;
-}
-
-.forge-plate-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3);
-  padding: var(--s-2) var(--s-3);
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--graphite);
-}
-
-.forge-plate-head b {
-  color: var(--filament);
-  font-weight: 500;
-}
-
-/* The schematic: a masthead bar, a headline block, a column of rules, and a
-   gallery grid — the shape every one of these templates actually has. */
-.forge-plate-body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  grid-template-rows: auto 1fr;
-  gap: var(--s-3);
-  padding: var(--s-4);
-  min-height: 0;
-}
-
-.forge-plate-bar {
-  grid-column: 1 / -1;
-  height: 6px;
-  background: rgba(232, 237, 247, 0.24);
-}
-
-.forge-plate-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  min-height: 0;
-}
-
-.forge-plate-stack i {
-  display: block;
-  height: 4px;
-  background: rgba(232, 237, 247, 0.16);
-}
-
-.forge-plate-stack i:first-child {
-  height: 16px;
-  background: var(--rule-filament);
-}
-
-.forge-plate-stack i:nth-child(2) {
-  width: 72%;
-}
-
-.forge-plate-stack i:nth-child(3) {
-  width: 54%;
-}
-
-.forge-plate-cells {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
-  gap: 7px;
-  min-height: 0;
-}
-
-.forge-plate-cells i {
-  border: 1px solid rgba(232, 237, 247, 0.16);
-}
-
-/* --- The output: where the live site lands --- */
-
-.forge-output {
-  position: relative;
-  z-index: 3;
-  width: min(82vw, 900px);
-  align-self: center;
-  /* Wipes open from the seam the plates fused at. */
-  clip-path: inset(50% 0 50% 0);
-  opacity: 0;
-  pointer-events: auto;
-}
-
-.forge-output .preview-frame {
-  box-shadow: var(--bloom);
-  transition: box-shadow 500ms var(--ease), border-color 400ms var(--ease);
-}
-
-.forge-output a:hover .preview-frame,
-.forge-output a:focus-visible .preview-frame {
-  border-color: var(--rule-filament);
-  box-shadow: var(--bloom-hot);
-}
-
-/* The strike. One ring, expanded and faded across a few frames of scroll. */
-.forge-shock {
-  position: relative;
-  z-index: 2;
-  width: min(72vw, 720px);
-  aspect-ratio: 16 / 10;
-  align-self: center;
-  border: 1px solid var(--ember);
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* The caption that replaces the lockup once the press opens. */
-.forge-caption {
-  position: absolute;
-  z-index: 4;
-  left: max(var(--gutter), env(safe-area-inset-left));
-  right: max(var(--gutter), env(safe-area-inset-right));
-  top: clamp(var(--s-5), 12vh, var(--s-8));
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--s-2) var(--s-4);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--graphite);
-  opacity: 0;
-  pointer-events: none;
-  max-width: none;
+  gap: var(--s-5) var(--s-8);
   margin: 0;
-}
-
-.forge-caption b {
-  color: var(--chalk);
-  font-weight: 500;
-}
-
-.forge-caption i {
-  font-style: normal;
-  color: var(--ember);
-}
-
-/* --- Corner instrumentation --- */
-
-.forge-readout {
-  position: absolute;
-  z-index: 4;
-  bottom: max(var(--s-5), env(safe-area-inset-bottom));
-  left: max(var(--gutter), env(safe-area-inset-left));
-  right: max(var(--gutter), env(safe-area-inset-right));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-4);
-  padding-top: var(--s-3);
+  padding-top: var(--s-5);
   border-top: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--graphite);
+}
+
+.catalog-stats dt {
+  margin-bottom: var(--s-2);
+}
+
+.catalog-stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: var(--wdth-normal);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
-  pointer-events: none;
-}
-
-.forge-readout dl {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-  margin: 0;
-}
-
-.forge-readout dt {
-  color: rgba(133, 147, 173, 0.6);
-}
-
-.forge-readout dd {
-  margin: 0;
-  color: var(--chalk);
-  min-width: 6ch;
-}
-
-.forge-readout dd[data-hot="true"] {
-  color: var(--ember);
-}
-
-.forge-cue {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-}
-
-.forge-cue::after {
-  content: "";
-  width: 26px;
-  height: 1px;
-  background: var(--rule-strong);
-  animation: cue-run 2.4s var(--ease) infinite;
-  transform-origin: 0 50%;
-}
-
-@keyframes cue-run {
-  0%,
-  100% {
-    transform: scaleX(0.3);
-    opacity: 0.4;
-  }
-
-  50% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
 }
 
 /* ---------- Catalog control bar ---------- */
 
+/* The sticky bar is positioned against this, not against the page: without it
+   the bar unsticks only at the end of the document and rides down over the
+   call to action and the footer. */
 .catalog {
   position: relative;
 }
 
-/* Sticks under the header so search and filter stay reachable through a very
-   long rail of specimens. */
+/* Sticks under the header: the filters are how you move around a shop, so they
+   stay reachable however far down the shelves you are. */
 .catalog-bar {
   position: sticky;
   top: var(--header-h);
   z-index: var(--z-sticky);
-  background: rgba(5, 7, 12, 0.94);
-  backdrop-filter: blur(18px);
+  background: rgba(245, 243, 239, 0.92);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--s-7);
 }
 
 .catalog-bar-inner {
@@ -1391,70 +1082,106 @@ strong {
   padding-block: var(--s-3);
 }
 
-.catalog-bar-label {
-  font-size: 0.875rem;
-  letter-spacing: 0.06em;
-  color: var(--chalk);
-  margin-right: auto;
-}
-
 .search-input {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  flex: 0 1 280px;
+  flex: 0 1 240px;
   padding: 0 var(--s-4);
-  background: var(--steel);
+  background: var(--surface);
   border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
   transition: border-color 220ms var(--ease);
 }
 
 .search-input:focus-within {
-  border-color: var(--filament);
+  border-color: var(--accent);
 }
 
 .search-input svg {
   flex: none;
-  color: var(--graphite);
+  color: var(--muted);
 }
 
 .search-input input {
   flex: 1;
   min-width: 0;
-  min-height: 46px;
+  min-height: 44px;
   border: 0;
   background: transparent;
   /* Must stay at 16px: iOS Safari zooms the whole page in on focus for
      anything smaller, and the visitor is then stranded at 1.2x. */
   font-size: 1rem;
-  color: var(--chalk);
+  color: var(--ink);
   outline: none;
 }
 
 .search-input input::placeholder {
-  color: var(--graphite);
+  color: var(--muted);
+}
+
+/* Category is the primary organisation of the shop, so it gets the primary
+   control — one chip per shelf, reading as a row of labels rather than a
+   dropdown you have to open to see your options. */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-right: auto;
+}
+
+.chip {
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 200ms var(--ease), border-color 200ms var(--ease),
+    color 200ms var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 .segmented {
   display: flex;
+  flex: none;
   border: 1px solid var(--rule);
-  background: var(--steel);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  overflow: hidden;
 }
 
 .segmented button {
-  min-height: 46px;
+  min-height: 42px;
   padding: 0 var(--s-4);
   border: 0;
   border-right: 1px solid var(--rule);
   background: transparent;
-  color: var(--graphite);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.625rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 220ms var(--ease), color 220ms var(--ease);
+  transition: background 200ms var(--ease), color 200ms var(--ease);
 }
 
 .segmented button:last-child {
@@ -1462,240 +1189,299 @@ strong {
 }
 
 .segmented button:hover {
-  color: var(--chalk);
-  background: var(--wash);
+  color: var(--ink);
+  background: var(--surface-2);
 }
 
 .segmented button[aria-pressed="true"] {
-  background: var(--chalk);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .results-note {
   font-family: var(--font-mono);
   font-size: 0.625rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--graphite);
+  letter-spacing: 0.16em;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
   margin: 0;
   flex: none;
 }
 
-/* ---------- Specimen rail ---------- */
+/* ---------- Shelves ---------- */
 
-/* One tier per series. The series head is the largest type on the page after
-   the hero, and it is condensed rather than expanded so it never competes
-   with the lockup. */
-.series {
-  padding-top: var(--s-8);
+/* One shelf per category. The heading, the count and the line of explanation
+   under it are the whole apparatus — the products do the rest. */
+.catalog-body {
+  padding-bottom: var(--s-8);
 }
 
-.series-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--s-5);
+.shelf + .shelf {
+  margin-top: var(--s-9);
+}
+
+.shelf-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-5);
   padding-bottom: var(--s-4);
-  margin-bottom: var(--s-8);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.shelf-title {
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.shelf-count {
+  justify-self: end;
+}
+
+.shelf-blurb {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.9375rem;
+  max-width: 62ch;
+}
+
+/* A real grid, evenly spaced: the point of a catalog is that two products can
+   be compared without the layout having an opinion about which is which. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: var(--s-6) var(--s-5);
+}
+
+/* ---------- Product card ---------- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--lift);
+  transition: transform 320ms var(--ease), box-shadow 320ms var(--ease),
+    border-color 320ms var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--rule-strong);
+  box-shadow: var(--lift-hover);
+}
+
+/* Nothing to open yet, so nothing lifts. */
+.card[data-soon="true"]:hover {
+  transform: none;
+  box-shadow: var(--lift);
+}
+
+.card-media {
+  position: relative;
   border-bottom: 1px solid var(--rule);
 }
 
-.series-title {
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  color: var(--chalk);
+/* The flag lands on top of the tray, so the address inside it stops short
+   rather than running underneath. */
+.card-media:has(.card-flag) .preview-url {
+  padding-right: 76px;
 }
 
-.series-title em {
-  font-style: normal;
-  color: var(--ember);
-}
-
-.series-note {
-  padding-bottom: 0.5em;
-  flex: none;
-}
-
-.specimens {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-10);
-}
-
-/* The rail is asymmetric on purpose: the preview takes seven of twelve
-   columns and swaps sides down the page, so no two specimens present the
-   same way and the eye never settles into a grid. */
-.specimen {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: center;
-  gap: var(--s-5) var(--s-6);
-  position: relative;
-}
-
-.specimen-stage {
-  grid-column: 1 / span 7;
-  grid-row: 1;
-  position: relative;
-}
-
-.specimen-spec {
-  grid-column: 8 / span 5;
-  grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--s-4);
-}
-
-.specimen[data-side="right"] .specimen-stage {
-  grid-column: 6 / span 7;
-}
-
-.specimen[data-side="right"] .specimen-spec {
-  grid-column: 1 / span 5;
-}
-
-/* The index is set at display scale and bled past the stage edge, so it reads
-   as a plate number stamped on the work rather than a list bullet. */
-.specimen-index {
+.card-flag {
   position: absolute;
-  top: -0.46em;
-  left: -0.12em;
-  z-index: 2;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-stretch: var(--wdth-expanded);
-  font-size: clamp(3.5rem, 9vw, 8rem);
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(232, 237, 247, 0.28);
-  pointer-events: none;
-  user-select: none;
-}
-
-.specimen[data-side="right"] .specimen-index {
-  left: auto;
-  right: -0.12em;
-}
-
-/* The demo inside a frame is inert by design, so nothing about it says "this
-   is a link". The chip follows the pointer across the frame and says so.
-   quickTo writes x/y straight to the transform — a pointermove never reaches
-   React, and a coarse pointer never creates this at all. */
-.specimen-cursor {
-  position: absolute;
-  top: 0;
-  left: 0;
+  top: var(--s-3);
+  right: var(--s-3);
   z-index: 3;
-  display: grid;
-  place-content: center;
-  width: 86px;
-  height: 86px;
-  margin: -43px 0 0 -43px;
-  border-radius: 50%;
+  padding: 5px 10px;
+  border-radius: 999px;
   background: var(--ember);
-  color: var(--ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* The demo in the frame is inert, so nothing about the picture says it is a
+   door. This slides up over the bottom of it and says so — on hover and, since
+   the frame is reached by keyboard too, on focus. */
+.card-open {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: var(--s-3) var(--s-4);
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--font-mono);
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  opacity: 0;
-  transform: scale(0.6);
-  pointer-events: none;
+  transform: translateY(101%);
+  transition: transform 320ms var(--ease);
 }
 
-.specimen-name {
+.preview-link:hover .card-open,
+.preview-link:focus-visible .card-open {
+  transform: translateY(0);
+}
+
+.card-placeholder {
+  display: grid;
+  place-content: center;
+  aspect-ratio: 16 / 10;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--surface) 0 12px,
+    var(--surface-2) 12px 24px
+  );
+}
+
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-5);
+}
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  width: 100%;
+}
+
+.card-name {
   font-family: var(--font-display);
   font-weight: 700;
   font-stretch: var(--wdth-normal);
-  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   margin: 0;
 }
 
-.specimen-name a {
-  color: var(--chalk);
+.card-name a {
+  color: var(--ink);
   text-decoration: none;
-  transition: color 240ms var(--ease);
+  transition: color 200ms var(--ease);
 }
 
-.specimen-name a:hover {
-  color: var(--filament);
+.card-name a:hover {
+  color: var(--accent);
 }
 
-.specimen-audience {
+.card-price-soon {
+  flex: none;
+  letter-spacing: 0.14em;
+}
+
+.card-audience {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--graphite);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--muted);
   max-width: none;
 }
 
-.specimen-desc {
+/* Descriptions arrive at whatever length they were written; a shelf of cards
+   wants them all the same height, so they are clamped rather than trimmed in
+   the data. The detail page carries the full text. */
+.card-desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
   margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--graphite);
-  max-width: 42ch;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted);
 }
 
-.specimen-meta {
+.card-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-2);
 }
 
-.specimen-actions {
+/* Pinned to the bottom of the card, so the two ways out line up across a row
+   however long the copy above them runs. */
+.card-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-4);
-  margin-top: var(--s-1);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--s-2);
 }
 
-/* Upcoming templates have no demo, so they get a drawing instead of a
-   specimen — same footprint, obviously unfinished. */
-.specimen-upcoming {
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  gap: var(--s-4);
-  aspect-ratio: 16 / 10;
-  padding: var(--s-6);
-  border: 1px dashed var(--rule-strong);
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent 0 14px,
-    rgba(232, 237, 247, 0.022) 14px 28px
-  );
-}
-
-.specimen-upcoming p {
-  margin: 0;
-  max-width: 44ch;
-  color: var(--graphite);
+.card-actions .button {
+  min-height: 44px;
+  padding-inline: var(--s-5);
 }
 
 .empty-state {
   display: grid;
   justify-items: center;
   gap: var(--s-5);
-  padding: var(--s-9) var(--s-5);
+  padding: var(--s-8) var(--s-5);
   text-align: center;
   border: 1px solid var(--rule);
-  background: var(--steel);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .empty-state p {
   margin: 0;
+}
+
+/* ---------- Ordering summary ---------- */
+
+.step-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--s-5);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--s-6);
+}
+
+.step-cards li {
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.step-cards .readout {
+  color: var(--accent);
+}
+
+.step-cards h3 {
+  font-stretch: var(--wdth-normal);
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  margin: var(--s-3) 0 var(--s-2);
+}
+
+.step-cards p {
+  margin: 0;
+  font-size: 0.9375rem;
 }
 
 /* ---------- Badges ---------- */
@@ -1704,41 +1490,49 @@ strong {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+  padding: 5px 11px;
   border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
   font-family: var(--font-mono);
   font-size: 0.625rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   flex: none;
 }
 
 .badge-theme-dark {
-  border-color: var(--rule-strong);
-  background: var(--steel-2);
-  color: var(--chalk);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .badge-premium {
-  border-color: var(--ember);
+  border-color: rgba(194, 65, 12, 0.35);
   background: var(--wash-ember);
   color: var(--ember);
 }
 
 .badge-soon {
-  border-color: var(--rule-filament);
+  border-color: var(--rule-accent);
   background: var(--wash);
-  color: var(--filament);
+  color: var(--accent-deep);
 }
 
 .badge-price {
-  border-color: var(--rule-strong);
-  color: var(--chalk);
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
   text-transform: none;
+}
+
+.badge-category {
+  border-color: var(--rule-strong);
+  color: var(--ink);
 }
 
 .badge-row {
@@ -1760,71 +1554,13 @@ strong {
 .tag-list li {
   padding: 5px 10px;
   border: 1px solid var(--rule);
-  color: var(--graphite);
+  border-radius: 999px;
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.5625rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-/* ---------- Specification readout ---------- */
-
-/* Deliberately the densest, flattest block on the page — after a hero of
-   depth and a rail of huge pictures, the eye wants a ledger. */
-.spec-sheet {
-  border-top: 1px solid var(--rule-strong);
-}
-
-.spec-row {
-  display: grid;
-  grid-template-columns: 4rem minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: var(--s-4) var(--s-5);
-  padding-block: var(--s-5);
-  border-bottom: 1px solid var(--rule);
-}
-
-.spec-row-index {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--graphite);
-}
-
-.spec-row-label {
-  font-size: clamp(1.125rem, 2.4vw, 1.75rem);
-  letter-spacing: 0.04em;
-  color: var(--chalk);
-}
-
-.spec-row-value {
-  justify-self: end;
-  text-align: right;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-stretch: var(--wdth-expanded);
-  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--chalk);
-  font-variant-numeric: tabular-nums;
-}
-
-.spec-row-value small {
-  display: block;
-  margin-top: var(--s-2);
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 0.625rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--graphite);
-}
-
-.spec-row:nth-child(even) .spec-row-value {
-  color: var(--filament);
 }
 
 /* ---------- Detail page ---------- */
@@ -1835,8 +1571,9 @@ strong {
 }
 
 .case-title {
-  font-size: clamp(2.75rem, 9vw, 7.5rem);
-  color: var(--chalk);
+  font-size: clamp(2.125rem, 5vw, 3.5rem);
+  letter-spacing: -0.035em;
+  color: var(--ink);
   margin-bottom: var(--s-5);
 }
 
@@ -1872,19 +1609,80 @@ strong {
 }
 
 .case-stage .preview-frame {
-  box-shadow: var(--bloom);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--lift);
 }
 
 /* The audience line is the one piece of copy on this route that is a claim
    about who the template is for, so it is set as a statement. */
 .case-audience {
+  font-family: var(--font-display);
+  font-weight: 700;
   font-stretch: var(--wdth-normal);
-  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
-  line-height: 1.2;
+  font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 22ch;
+}
+
+/* Upcoming templates have no demo, so the stage shows a drawing instead —
+   same footprint, obviously unfinished. */
+.case-placeholder {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--s-4);
+  aspect-ratio: 16 / 10;
+  padding: var(--s-6);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--surface) 0 12px,
+    var(--surface-2) 12px 24px
+  );
+}
+
+.case-placeholder p {
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* The two facts that sit beside the feature list: who it is for, and the shelf
+   it came off. */
+.case-side {
+  display: grid;
+  align-content: start;
+  gap: var(--s-6);
+}
+
+.case-category {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+}
+
+.case-category a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: var(--wdth-normal);
+  font-size: 1.25rem;
   letter-spacing: -0.02em;
-  color: var(--chalk);
-  text-transform: none;
-  max-width: 20ch;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.case-category a:hover {
+  color: var(--accent);
+}
+
+.case-category span {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--muted);
 }
 
 .case-next-body {
@@ -1925,7 +1723,7 @@ strong {
   align-items: baseline;
   padding-block: var(--s-4);
   border-bottom: 1px solid var(--rule);
-  color: var(--chalk);
+  color: var(--ink);
   line-height: 1.5;
 }
 
@@ -1935,7 +1733,7 @@ strong {
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.18em;
-  color: var(--filament);
+  color: var(--accent);
 }
 
 /* Pagination between templates, set big enough to be the obvious next move. */
@@ -1948,47 +1746,59 @@ strong {
   margin-top: var(--s-8);
   border-top: 1px solid var(--rule);
   text-decoration: none;
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 .case-next-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-stretch: var(--wdth-condensed);
-  font-size: clamp(1.75rem, 6vw, 3.5rem);
-  line-height: 1;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  transition: color 240ms var(--ease), font-stretch 400ms var(--ease);
+  font-stretch: var(--wdth-normal);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  transition: color 240ms var(--ease);
 }
 
 .case-next:hover .case-next-name {
-  color: var(--filament);
-  font-stretch: 80%;
+  color: var(--accent);
 }
 
 .case-next svg {
   flex: none;
-  color: var(--graphite);
+  color: var(--muted);
   transition: transform 320ms var(--ease), color 240ms var(--ease);
 }
 
 .case-next:hover svg {
   transform: translateX(8px);
-  color: var(--filament);
+  color: var(--accent);
 }
 
 /* ---------- Content pages ---------- */
 
+/* The rule under a page title is drawn inside the gutters rather than on the
+   container's own edge, so it lines up with every other rule on the page
+   instead of running out past the text on both sides. */
 .page-head {
+  position: relative;
   padding-top: var(--s-8);
   padding-bottom: var(--s-7);
-  border-bottom: 1px solid var(--rule);
+}
+
+.page-head::after {
+  content: "";
+  position: absolute;
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: max(var(--gutter), env(safe-area-inset-right));
+  bottom: 0;
+  height: 1px;
+  background: var(--rule);
 }
 
 .page-title {
-  font-size: clamp(2.5rem, 9vw, 7rem);
-  color: var(--chalk);
+  font-size: clamp(2.125rem, 5vw, 3.5rem);
+  letter-spacing: -0.035em;
+  color: var(--ink);
 }
 
 .page-intro {
@@ -2030,7 +1840,7 @@ strong {
   display: flex;
   gap: var(--s-4);
   padding-block: var(--s-2);
-  color: var(--graphite);
+  color: var(--muted);
   line-height: 1.6;
 }
 
@@ -2042,7 +1852,7 @@ strong {
   margin-top: 0.78em;
   width: 10px;
   height: 1px;
-  background: var(--filament);
+  background: var(--accent);
 }
 
 /* Statements set at display scale — the About page is three facts, so they are
@@ -2082,7 +1892,7 @@ strong {
   font-size: clamp(1.25rem, 3vw, 2rem);
   line-height: 1.15;
   letter-spacing: -0.03em;
-  color: var(--chalk);
+  color: var(--ink);
   max-width: 22ch;
 }
 
@@ -2127,8 +1937,8 @@ strong {
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.18em;
-  color: var(--filament);
-  background: var(--ink);
+  color: var(--accent);
+  background: var(--paper);
   padding-block: 2px;
 }
 
@@ -2163,7 +1973,8 @@ strong {
   padding: var(--s-5);
   border: 1px solid var(--rule);
   border-left: 2px solid var(--ember);
-  background: var(--steel);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
   margin-bottom: var(--s-6);
 }
 
@@ -2194,13 +2005,15 @@ strong {
 }
 
 .cta-title {
-  font-size: clamp(2.25rem, 8vw, 6rem);
-  color: var(--chalk);
+  font-size: clamp(1.875rem, 4.4vw, 3rem);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
 }
 
 .cta-title em {
   font-style: normal;
-  color: var(--filament);
+  color: var(--accent);
 }
 
 .cta-actions {
@@ -2213,7 +2026,7 @@ strong {
 
 .site-footer {
   border-top: 1px solid var(--rule);
-  background: var(--ink);
+  background: var(--paper);
   overflow: hidden;
 }
 
@@ -2223,9 +2036,9 @@ strong {
    that just says "SYSTEM". */
 .footer-wordmark {
   display: block;
-  padding-top: var(--s-7);
-  font-size: clamp(3rem, 16.5vw, 14.5rem);
-  line-height: 0.8;
+  padding-top: var(--s-6);
+  font-size: clamp(2.5rem, 9vw, 7rem);
+  line-height: 0.86;
   letter-spacing: -0.05em;
   color: transparent;
   -webkit-text-stroke: 1px var(--rule-strong);
@@ -2237,7 +2050,7 @@ strong {
 }
 
 .footer-wordmark span:last-child {
-  -webkit-text-stroke-color: var(--rule-filament);
+  -webkit-text-stroke-color: var(--rule-accent);
 }
 
 .footer-inner {
@@ -2264,20 +2077,20 @@ strong {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--graphite);
+  color: var(--muted);
   text-decoration: none;
   transition: color 200ms var(--ease);
 }
 
 .footer-links a:hover {
-  color: var(--chalk);
+  color: var(--ink);
 }
 
 .footer-tiktok {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  color: var(--chalk) !important;
+  color: var(--ink) !important;
 }
 
 .footer-tiktok:hover {
@@ -2327,32 +2140,6 @@ strong {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1080px) {
-  /* Below this the seven-column stage is narrower than the spec column wants,
-     so the rail becomes a stack — but an offset one, not a centred column. */
-  .specimen {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-5);
-  }
-
-  .specimen-stage,
-  .specimen[data-side="right"] .specimen-stage,
-  .specimen-spec,
-  .specimen[data-side="right"] .specimen-spec {
-    grid-column: 1 / -1;
-  }
-
-  .specimen-stage {
-    grid-row: 1;
-  }
-
-  .specimen-spec {
-    grid-row: 2;
-  }
-
-  .specimens {
-    gap: var(--s-9);
-  }
-
   .case-meta,
   .case-lede {
     grid-template-columns: minmax(0, 1fr);
@@ -2365,7 +2152,11 @@ strong {
 
 @media (max-width: 850px) {
   :root {
-    --s-9: 5rem;
+    /* A shorter bar, because the filters sit under it and both have to stay on
+       screen without eating the first row of products. */
+    --header-h: 56px;
+    --s-8: 3.5rem;
+    --s-9: 4.5rem;
     --s-10: 6rem;
   }
 
@@ -2375,7 +2166,7 @@ strong {
      scroll past. */
   .site-header,
   .catalog-bar {
-    background: var(--ink);
+    background: var(--paper);
     backdrop-filter: none;
   }
 
@@ -2387,85 +2178,67 @@ strong {
     display: none;
   }
 
-  .catalog-bar-label {
-    display: none;
+  .catalog-bar-inner {
+    gap: var(--s-2);
+    padding-block: var(--s-2);
   }
 
-  .catalog-bar-inner {
-    flex-wrap: nowrap;
-    gap: var(--s-2);
+  /* A small flex basis, not auto: a wrapping flex container breaks lines on
+     content width, so an auto-sized search field pushes the theme filter onto
+     a row of its own and the sticky bar grows to three. */
+  .search-input {
+    flex: 1 1 140px;
+    min-width: 0;
+    padding-inline: var(--s-3);
+  }
+
+  .search-input input {
+    min-height: 42px;
+  }
+
+  .segmented button {
+    min-height: 42px;
+    padding-inline: var(--s-3);
+    letter-spacing: 0.08em;
   }
 
   .catalog-count {
     display: none;
   }
 
-  /* The two halves of the hero eyebrow stack rather than run off the edge. */
-  .forge-eyebrow {
-    flex-direction: column;
-    gap: var(--s-1);
+  /* The chips are the filter that matters, so rather than wrapping the bar to
+     a third row they take a row of their own and scroll sideways in it. */
+  .chip-row {
+    order: 3;
+    flex: 1 0 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0;
+    padding-bottom: 2px;
   }
 
-  .search-input {
-    flex: 1 1 auto;
-    min-width: 0;
+  .chip-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    min-height: 36px;
     padding-inline: var(--s-3);
   }
 
-  .search-input input {
-    min-height: 44px;
-  }
-
-  .segmented {
-    flex: none;
-  }
-
-  .segmented button {
-    min-height: 44px;
-    padding-inline: var(--s-3);
-    letter-spacing: 0.08em;
-  }
-
-  .forge-track {
-    height: 280vh;
-  }
-
-  .forge-billet,
-  .forge-shock {
-    width: min(84vw, 560px);
-  }
-
-  .forge-output {
-    width: min(92vw, 640px);
-  }
-
-  .spec-row {
-    grid-template-columns: 3rem minmax(0, 1fr);
-  }
-
-  .spec-row-value {
-    grid-column: 2;
-    justify-self: start;
-    text-align: left;
-  }
-
-  .series-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--s-3);
-  }
-
-  .series-note {
-    padding-bottom: 0;
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--s-5);
   }
 }
 
 @media (max-width: 600px) {
-  .specimen-index {
-    font-size: clamp(2.75rem, 16vw, 4rem);
-    top: -0.34em;
+  .catalog-stats {
+    gap: var(--s-4) var(--s-6);
   }
 
+  .card-actions .button,
   .case-actions .button,
   .cta-actions .button {
     flex: 1 1 100%;
@@ -2494,18 +2267,9 @@ strong {
     gap: var(--s-2);
   }
 
-  .specimen-upcoming {
+  .case-placeholder {
     aspect-ratio: auto;
     padding: var(--s-5);
-  }
-
-  .forge-readout {
-    font-size: 0.5625rem;
-    letter-spacing: 0.12em;
-  }
-
-  .forge-readout dd {
-    min-width: 5ch;
   }
 }
 
@@ -2533,49 +2297,7 @@ strong {
     scroll-behavior: auto !important;
   }
 
-  /* The forge sequence is never built under reduced motion (motion.js checks
-     the same query), so the stage composes itself statically instead: no pin,
-     no 3D, no press — the lockup above the finished specimen, which is the
-     last frame of the sequence anyway. */
-  .forge-track {
-    height: auto;
-  }
-
-  .forge-stage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--s-7);
-    height: auto;
-    min-height: 0;
-    padding-block: var(--s-8);
-  }
-
-  .forge-inner,
-  .forge-scene {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-
-  .forge-scene {
-    perspective: none;
-  }
-
-  .forge-billet,
-  .forge-shock,
-  .forge-caption,
-  .forge-readout {
-    display: none;
-  }
-
-  .forge-output {
-    width: min(100%, 760px);
-    opacity: 1;
-    clip-path: none;
-  }
-
-  .forge-grid {
-    opacity: 1;
+  .card:hover {
+    transform: none;
   }
 }

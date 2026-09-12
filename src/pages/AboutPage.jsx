@@ -36,7 +36,8 @@ export default function AboutPage() {
     <div ref={root}>
       <PageHeader eyebrow="About" title="System Forge">
         <p>
-          We build portfolio websites and sell them as finished templates. There are{' '}
+          We build websites and sell them as finished templates — portfolio, business,
+          and esports. There are{' '}
           <strong>{live} live</strong> right now, each one running on the catalog page so
           you can look before you order.
         </p>
@@ -63,7 +64,7 @@ export default function AboutPage() {
 
       <section>
         <div className="container cta-panel">
-          <h2 className="cta-title display" data-reveal="lines">
+          <h2 className="cta-title" data-reveal="lines">
             Have a look.
           </h2>
 
