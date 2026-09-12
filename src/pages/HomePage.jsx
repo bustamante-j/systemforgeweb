@@ -1,10 +1,8 @@
 import { useGSAP } from '@gsap/react'
-import { ArrowUpRight, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useDeferredValue, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import TemplateCard from '../components/TemplateCard'
-import TikTokIcon from '../components/TikTokIcon'
-import { categories, categoryOf, orderSummary, siteConfig, templates } from '../data/site'
+import { categories, categoryOf, templates } from '../data/site'
 import { EASE_OUT, gsap, prefersReducedMotion, sectionMotion } from '../lib/motion'
 
 const themeFilters = [
@@ -52,17 +50,6 @@ const searchIndex = new Map(
   ]),
 )
 
-const available = templates.filter((template) => template.status === 'available')
-const lowestPrice = Math.min(...available.map((template) => template.price))
-
-// Read off the data so the counter under the title can never drift from what is
-// actually on the shelves.
-const stats = [
-  { label: 'Templates live', value: available.length, pad: true },
-  { label: 'Categories', value: shelfOrder.length, pad: true },
-  { label: 'Starting at', value: lowestPrice, prefix: '₱' },
-]
-
 export default function HomePage() {
   const root = useRef(null)
   const shelvesRef = useRef(null)
@@ -105,11 +92,11 @@ export default function HomePage() {
   }, [category, deferredQuery, theme])
 
   // Page-wide scroll choreography. Everything it drives is declared in markup
-  // with data-reveal / data-stagger / data-count attributes.
+  // with data-reveal / data-stagger attributes.
   useGSAP(() => sectionMotion(root.current), { scope: root })
 
   // Filtering re-stocks the shelves rather than blinking them. Skipped on the
-  // first pass, where the scroll reveals already own the entrance.
+  // first pass, where the cards are already on screen when the page arrives.
   useGSAP(
     () => {
       if (firstPass.current) {
@@ -137,39 +124,10 @@ export default function HomePage() {
 
   return (
     <div ref={root}>
-      <section className="catalog-intro">
-        <div className="container catalog-intro-inner">
-          <div>
-            <p className="eyebrow">The catalog</p>
-            <h1 className="catalog-title">Ready-made websites, running live.</h1>
-            <p className="catalog-lede">
-              Finished, responsive sites you can look at before you buy — every card on
-              this page is the real thing, loaded in the frame. Pick one and we set it up
-              with your content.
-            </p>
-          </div>
-
-          <dl className="catalog-stats" data-stagger>
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="readout">{stat.label}</dt>
-                <dd>
-                  <span
-                    data-count={stat.value}
-                    data-count-pad={stat.pad ? 'true' : 'false'}
-                    data-count-prefix={stat.prefix ?? ''}
-                  >
-                    {stat.prefix ?? ''}
-                    {stat.pad
-                      ? String(stat.value).padStart(2, '0')
-                      : stat.value.toLocaleString('en-PH')}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
+      {/* No hero, and no page title above the shelves either — the catalog is
+          the page. The heading stays for the document outline and for anyone
+          arriving by screen reader. */}
+      <h1 className="sr-only">Templates</h1>
 
       {/* Bar and shelves share one section, which is what keeps the sticky bar
           inside the catalog instead of riding down over the footer. */}
@@ -270,64 +228,6 @@ export default function HomePage() {
               </button>
             </div>
           )}
-        </div>
-      </section>
-
-      <section aria-labelledby="ordering-heading" className="section">
-        <div className="container">
-          <div className="section-marker">
-            <span className="section-marker-index">01</span>
-            <h2 className="section-marker-label marker" id="ordering-heading">
-              How ordering works
-            </h2>
-            <span className="section-marker-rule" data-reveal="rule" />
-          </div>
-
-          <ol className="step-cards" data-stagger>
-            {orderSummary.map((step, index) => (
-              <li key={step.title}>
-                <span className="readout">{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step.title}</h3>
-                <p>{step.detail}</p>
-              </li>
-            ))}
-          </ol>
-
-          <Link className="text-link step-cards-link" to="/contact">
-            The full seven steps
-            <ArrowUpRight aria-hidden="true" size={12} strokeWidth={1.75} />
-          </Link>
-        </div>
-      </section>
-
-      <section>
-        <div className="container cta-panel">
-          <h2 className="cta-title" data-reveal="lines">
-            Pick one. We build it.
-          </h2>
-
-          <div className="cta-foot">
-            <p data-reveal="up">
-              Send the template name and your details on TikTok. Half up front, the rest
-              when you have seen the preview.
-            </p>
-
-            <div className="cta-actions" data-stagger>
-              <a
-                className="button"
-                href={siteConfig.tiktokUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <TikTokIcon size={13} />
-                <span>Order on TikTok</span>
-                <ArrowUpRight aria-hidden="true" size={13} strokeWidth={1.75} />
-              </a>
-              <Link className="button button-secondary" to="/contact">
-                <span>How ordering works</span>
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
     </div>

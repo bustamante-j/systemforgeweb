@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { siteConfig, visibleTags } from '../data/site'
 import ComingSoonBadge from './ComingSoonBadge'
 import LivePreview from './LivePreview'
-import PriceTag from './PriceTag'
 import ThemeBadge from './ThemeBadge'
 import TikTokIcon from './TikTokIcon'
 
@@ -13,8 +12,8 @@ function lowerFirst(text) {
   return text.charAt(0).toLowerCase() + text.slice(1)
 }
 
-// One product on the shelf. Every card is the same shape — picture, name,
-// price, who it is for, then the two ways out of it — so a shelf of them reads
+// One template on the shelf. Every card is the same shape — picture, name,
+// who it is for, then the two ways out of it — so a shelf of them reads
 // as a catalog you can scan rather than a series of set pieces.
 export default function TemplateCard({ template }) {
   const isPremium = template.tier === 'premium'
@@ -54,11 +53,7 @@ export default function TemplateCard({ template }) {
               <Link to={`/templates/${template.id}`}>{template.name}</Link>
             )}
           </h3>
-          {isComingSoon ? (
-            <span className="card-price-soon readout">Soon</span>
-          ) : (
-            <PriceTag price={template.price} />
-          )}
+          {isComingSoon ? <span className="card-soon readout">Soon</span> : null}
         </div>
 
         <p className="card-audience">For {lowerFirst(template.audience)}</p>

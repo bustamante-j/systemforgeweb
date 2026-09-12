@@ -34,7 +34,6 @@ export function prefersReducedMotion() {
 //   data-reveal="wipe"    a frame opens from its own centre line
 //   data-stagger          children rise in sequence
 //   data-parallax="-80"   scrubbed drift, in pixels, against the scroll
-//   data-count="7"        the number counts up when it arrives
 //
 // Every one of them is transform/opacity/clip-path only.
 //
@@ -165,29 +164,6 @@ function buildSectionMotion(root) {
         },
       },
     )
-  })
-
-  // --- Counters ------------------------------------------------------------
-  q('[data-count]').forEach((el) => {
-    const target = Number(el.dataset.count)
-    if (!Number.isFinite(target)) {
-      return
-    }
-
-    const prefix = el.dataset.countPrefix ?? ''
-    const pad = el.dataset.countPad === 'true'
-    const value = { n: 0 }
-
-    gsap.to(value, {
-      n: target,
-      duration: 1.6,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-      onUpdate() {
-        const n = Math.round(value.n)
-        el.textContent = prefix + (pad ? String(n).padStart(2, '0') : n.toLocaleString('en-PH'))
-      },
-    })
   })
 
   // gsap.context (which useGSAP wraps this in) reverts the tweens but not the

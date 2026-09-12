@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router-dom'
 import ComingSoonBadge from '../components/ComingSoonBadge'
 import LivePreview from '../components/LivePreview'
 import PremiumBadge from '../components/PremiumBadge'
-import PriceTag from '../components/PriceTag'
 import ThemeBadge from '../components/ThemeBadge'
 import TikTokIcon from '../components/TikTokIcon'
 import {
@@ -72,7 +71,6 @@ export default function TemplateDetailPage() {
         <div className="case-lede">
           <p>{template.description}</p>
           <div className="case-lede-meta">
-            {isComingSoon ? null : <PriceTag price={template.price} />}
             <ThemeBadge theme={template.theme} />
             <ul className="tag-list" aria-label={`${template.name} categories`}>
               {visibleTags(template).map((tag) => (

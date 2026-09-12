@@ -42,23 +42,6 @@ export function categoryOf(value) {
   )
 }
 
-// The short version of the ordering walkthrough, shown under the catalog. The
-// full seven steps live on the contact page.
-export const orderSummary = [
-  {
-    title: 'Pick a template',
-    detail: 'Browse the live previews and send us the name of the one you want.',
-  },
-  {
-    title: 'Send your details',
-    detail: 'Your content and a 50% downpayment, over TikTok messages.',
-  },
-  {
-    title: 'Get your link',
-    detail: 'We build it, you review the preview, then the site is yours.',
-  },
-]
-
 // The ordering walkthrough on the contact page, in order. `detail` is the one
 // line under a step; `items` is the checklist a step asks the buyer to send.
 export const orderSteps = [
@@ -106,7 +89,6 @@ export const orderSteps = [
 
 // `category` is the shelf the card is filed on — see `categories` above; it is
 // the catalog's primary organisation and what the filter chips switch between.
-// `price` is in Philippine pesos; only 'available' templates have one.
 // `status` is 'available' (live preview + order) or 'coming-soon' (teaser card:
 // no demoUrl, no features — those templates are announced on TikTok first).
 // `tier` is 'standard' or 'premium'; premium cards carry a mark on the card and
@@ -120,7 +102,6 @@ export const templates = [
     theme: 'light',
     tier: 'standard',
     status: 'available',
-    price: 100,
     description:
       'A warm, editorial portfolio built for professionals who want their services, process, and experience to feel organized and approachable.',
     demoUrl: 'https://systemforge1.github.io/neataesthetic/',
@@ -140,7 +121,6 @@ export const templates = [
     theme: 'dark',
     tier: 'standard',
     status: 'available',
-    price: 100,
     description:
       'A sharp, dark portfolio with high-contrast typography and a technical feel for people who want a confident digital presence.',
     demoUrl: 'https://systemforge1.github.io/darktechy/',
@@ -160,7 +140,6 @@ export const templates = [
     theme: 'dark',
     tier: 'standard',
     status: 'available',
-    price: 100,
     description:
       'A navy-and-gold portfolio laid out like an architectural drawing set, with numbered sheets, site sections, and survey coordinates framing detailed visual work.',
     demoUrl: 'https://systemforge1.github.io/adventuredark/',
@@ -180,7 +159,6 @@ export const templates = [
     theme: 'light',
     tier: 'premium',
     status: 'available',
-    price: 200,
     description:
       'A Swiss-minimal photography portfolio on warm paper tones, with an archive-style project grid and editorial display type that keeps the images in front.',
     demoUrl: 'https://systemforge1.github.io/bnwaesthetic/',
@@ -200,7 +178,6 @@ export const templates = [
     theme: 'light',
     tier: 'premium',
     status: 'available',
-    price: 200,
     description:
       'A print-inspired portfolio in stark black, white, and signal yellow, built around a numbered index and a hover-driven project list for people who ship technical work.',
     demoUrl: 'https://systemforge1.github.io/moderneditorial/',
@@ -220,7 +197,6 @@ export const templates = [
     theme: 'light',
     tier: 'premium',
     status: 'available',
-    price: 200,
     description:
       'A clean, corporate-blue profile site for support, sales, and retention work, with service cards, skill meters, and a dated experience timeline that reads like a hiring brief.',
     demoUrl: 'https://systemforge1.github.io/simplemedium/',

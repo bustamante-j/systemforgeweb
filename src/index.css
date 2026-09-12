@@ -19,8 +19,9 @@
 
    Space Grotesk 400-600 sets body copy, JetBrains Mono 400-500 every readout.
    Both are variable, so each ships one file per subset. latin-ext is split out
-   behind its unicode-range: it exists for the ₱ in the price tags and is
-   skipped by anyone who never renders one. */
+   behind its unicode-range: it covers what the latin subset does not — an
+   accented name, a currency mark — and is skipped by anyone who never
+   renders one. */
 
 @font-face {
   font-family: Archivo;
@@ -989,87 +990,26 @@ strong {
   text-decoration: none;
 }
 
-/* ---------- Catalog head ---------- */
-
-/* No hero. The catalog opens with what it is, one line about how it works, and
-   a count read off the data — then the shelves start. */
-.catalog-intro {
-  padding-top: var(--s-8);
-  padding-bottom: var(--s-6);
-}
-
-/* Wide enough, and the count sits beside the introduction rather than under
-   it — half the height, and the first row of products stays on screen. */
-.catalog-intro-inner {
-  display: grid;
-  gap: var(--s-6);
-}
-
-@media (min-width: 1081px) {
-  .catalog-intro-inner {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    align-items: end;
-    gap: var(--s-8);
-  }
-}
-
-.catalog-title {
-  font-size: clamp(2.125rem, 5vw, 3.5rem);
-  letter-spacing: -0.035em;
-  max-width: 18ch;
-  margin-bottom: var(--s-4);
-}
-
-.catalog-lede {
-  font-size: 1.0625rem;
-  max-width: 58ch;
-  margin-bottom: var(--s-6);
-}
-
-.catalog-stats {
-  display: flex;
-  align-content: end;
-  flex-wrap: wrap;
-  gap: var(--s-5) var(--s-8);
-  margin: 0;
-  padding-top: var(--s-5);
-  border-top: 1px solid var(--rule);
-}
-
-.catalog-stats dt {
-  margin-bottom: var(--s-2);
-}
-
-.catalog-stats dd {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-stretch: var(--wdth-normal);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  line-height: 1;
-  letter-spacing: -0.035em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
 /* ---------- Catalog control bar ---------- */
 
 /* The sticky bar is positioned against this, not against the page: without it
    the bar unsticks only at the end of the document and rides down over the
-   call to action and the footer. */
+   footer. */
 .catalog {
   position: relative;
 }
 
-/* Sticks under the header: the filters are how you move around a shop, so they
-   stay reachable however far down the shelves you are. */
+/* Sticks under the header. With no hero above it the bar is the first thing
+   on the page, already at rest against the header, so it carries no top
+   hairline of its own — the header's own bottom rule is the line you see. The
+   filters are how you move around a shop, so they stay reachable however far
+   down the shelves you are. */
 .catalog-bar {
   position: sticky;
   top: var(--header-h);
   z-index: var(--z-sticky);
   background: rgba(245, 243, 239, 0.92);
   backdrop-filter: blur(14px);
-  border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   margin-bottom: var(--s-7);
 }
@@ -1383,7 +1323,7 @@ strong {
   color: var(--accent);
 }
 
-.card-price-soon {
+.card-soon {
   flex: none;
   letter-spacing: 0.14em;
 }
@@ -1450,40 +1390,6 @@ strong {
   margin: 0;
 }
 
-/* ---------- Ordering summary ---------- */
-
-.step-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: var(--s-5);
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--s-6);
-}
-
-.step-cards li {
-  padding: var(--s-5);
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-}
-
-.step-cards .readout {
-  color: var(--accent);
-}
-
-.step-cards h3 {
-  font-stretch: var(--wdth-normal);
-  font-size: 1.0625rem;
-  letter-spacing: -0.02em;
-  margin: var(--s-3) 0 var(--s-2);
-}
-
-.step-cards p {
-  margin: 0;
-  font-size: 0.9375rem;
-}
-
 /* ---------- Badges ---------- */
 
 .badge {
@@ -1519,15 +1425,6 @@ strong {
   border-color: var(--rule-accent);
   background: var(--wash);
   color: var(--accent-deep);
-}
-
-.badge-price {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  text-transform: none;
 }
 
 .badge-category {
@@ -2234,10 +2131,6 @@ strong {
 }
 
 @media (max-width: 600px) {
-  .catalog-stats {
-    gap: var(--s-4) var(--s-6);
-  }
-
   .card-actions .button,
   .case-actions .button,
   .cta-actions .button {
