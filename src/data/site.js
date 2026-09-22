@@ -21,7 +21,7 @@ export const categories = [
   {
     value: 'interactive',
     label: 'Interactive',
-    blurb: 'Scroll- and drag-driven pieces you use.',
+    blurb: 'Scroll-, drag-, and play-driven pieces you use.',
   },
   {
     value: 'business',
@@ -280,6 +280,24 @@ export const templates = [
       'A stage counter and fact panel that follow it',
       'Jump to any stage, restart, or mute',
       'Scroll and keyboard navigation',
+    ],
+  },
+  {
+    id: 'field-ops',
+    name: 'Field Ops',
+    audience: 'Gaming creators and browser-game projects',
+    category: 'interactive',
+    theme: 'dark',
+    tier: 'premium',
+    status: 'available',
+    description: 'A playable Call of Duty: Mobile recreation that runs in the browser.',
+    demoUrl: 'https://minicodm-mp.vercel.app/',
+    tags: ['Dark', 'WebGL', 'Browser game'],
+    features: [
+      'Team Deathmatch, Hardpoint, and Search & Destroy',
+      'AI squads filling both sides of every match',
+      'Gunsmith attachments, perks, and scorestreaks',
+      'Keyboard and mouse, or touch controls on a phone',
     ],
   },
   {
