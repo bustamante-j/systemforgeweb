@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ComingSoonBadge from '../components/ComingSoonBadge'
-import LivePreview from '../components/LivePreview'
+import TemplatePreview from '../components/TemplatePreview'
 import PremiumBadge from '../components/PremiumBadge'
 import ThemeBadge from '../components/ThemeBadge'
 import TikTokIcon from '../components/TikTokIcon'
@@ -89,7 +89,7 @@ export default function TemplateDetailPage() {
           </div>
         ) : (
           <div data-reveal="wipe">
-            <LivePreview priority template={template} />
+            <TemplatePreview priority template={template} />
           </div>
         )}
       </div>

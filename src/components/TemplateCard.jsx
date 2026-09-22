@@ -2,7 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { siteConfig, visibleTags } from '../data/site'
 import ComingSoonBadge from './ComingSoonBadge'
-import LivePreview from './LivePreview'
+import TemplatePreview from './TemplatePreview'
 import ThemeBadge from './ThemeBadge'
 import TikTokIcon from './TikTokIcon'
 
@@ -32,9 +32,9 @@ export default function TemplateCard({ template }) {
             className="preview-link"
             to={`/templates/${template.id}`}
           >
-            <LivePreview template={template} />
-            {/* The demo inside the frame is inert, so nothing about it says
-                "this is a link". This does, on hover and on focus. */}
+            <TemplatePreview template={template} />
+            {/* A picture of a site says nothing about being a link. This
+                does, on hover and on focus. */}
             <span className="card-open" aria-hidden="true">
               View template
             </span>

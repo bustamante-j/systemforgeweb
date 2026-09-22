@@ -845,11 +845,11 @@ strong {
   transform: translateX(-3px);
 }
 
-/* ---------- Live preview frame ---------- */
+/* ---------- Preview frame ---------- */
 
-/* The picture on the product card: a browser tray with a whole third-party
-   site rendered inside it. It carries no border of its own — inside a card the
-   card's border is the frame, and the detail page adds one back. */
+/* The picture on the product card: a browser tray with a still of the site
+   inside it. It carries no border of its own — inside a card the card's border
+   is the frame, and the detail page adds one back. */
 .preview-frame {
   position: relative;
   background: var(--surface-2);
@@ -898,23 +898,22 @@ strong {
 
 .preview-viewport {
   position: relative;
-  /* Matches the 1280x800 demo viewport, so the scaled iframe fills it exactly. */
+  /* Matches the 1280x800 shot, so the picture fills it exactly. */
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--surface-2);
-  /* What sits inside is a whole third-party page rendered at 1280x800 and
-     scaled down, so it is the most expensive box on the catalog. Containment
-     keeps its layout and paint off the rest of the page, and
-     content-visibility lets the browser drop the raster for demos that have
+  /* A shelf of decoded 1280x800 bitmaps is still real memory, so containment
+     keeps each one's layout and paint off the rest of the page and
+     content-visibility lets the browser drop the raster for cards that have
      been scrolled past. The aspect-ratio fixes the height either way, so
      nothing shifts as they come in and out of view. */
   contain: layout paint;
   content-visibility: auto;
 }
 
-/* A quiet sweep while a demo is actually fetching, so a slow connection reads
-   as "working" rather than "broken". Transform-only, so it stays on the
-   compositor, and it is gone the moment the frame is up. */
+/* A quiet sweep while the shot is fetching, so a slow connection reads as
+   "working" rather than "broken". Transform-only, so it stays on the
+   compositor, and it is gone the moment the picture is up. */
 .preview-frame[data-status="loading"] .preview-viewport::before {
   content: "";
   position: absolute;
@@ -936,7 +935,8 @@ strong {
   }
 }
 
-/* Sits behind the demo: the label while it loads, the fallback if it never does. */
+/* Sits behind the picture: the label while it loads, and what is left if there
+   is no shot for this template. */
 .preview-fallback {
   position: absolute;
   inset: 0;
@@ -954,29 +954,20 @@ strong {
   transition: opacity 500ms var(--ease);
 }
 
-.preview-viewport iframe {
+.preview-viewport img {
   position: absolute;
-  top: 0;
-  left: 0;
-  /* The desktop viewport the demo is rendered at, kept in step with
-     FRAME_WIDTH in LivePreview. */
-  width: 1280px;
-  /* Overrides the global max-width reset: the demo renders at desktop width
-     and is only then scaled down. */
-  max-width: none;
-  height: 800px;
-  border: 0;
-  /* LivePreview writes --preview-scale on the viewport as it is measured.
-     Until then the frame is folded away rather than overflowing at 1:1. */
-  transform: scale(var(--preview-scale, 0));
-  transform-origin: 0 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* The shot is 16/10 like the box, so this only guards a stray one that
+     is not — it must crop rather than squash the site inside it. */
+  object-fit: cover;
+  object-position: 50% 0;
   opacity: 0;
-  /* The demo is a picture here; clicks belong to the card. */
-  pointer-events: none;
   transition: opacity 600ms var(--ease);
 }
 
-.preview-frame[data-status="ready"] iframe {
+.preview-frame[data-status="ready"] img {
   opacity: 1;
 }
 
